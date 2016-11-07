@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- #7. mapper 기본설정 -->
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<!-- #8. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.)-->
+<mapper namespace="testdb">
+
+	<insert id = "mbt1">
+		insert into tbl_mybatistest(no, name, email, tel, addr, writeday) 
+		values (seq_mybatistest.nextval, '홍길동'||seq_mybatistest.nextval, 'honkd@naver.com', '010-234-5678', '서울시 강남구 역삼동', default)
+	</insert>
+	
+	<!-- 데이터를 전달받아서 SQL구문에 넣는 법 
+	1. 단일데이터(primitive type) ==> #{name}으로 하면 된다.
+	이 때 name 또는 아무 변수명 예를 들어 #irum이라고 해도 가능하다.
+	어차피 넘겨받은 데이터가 하나 뿐이기 때문이다. -->
+	<insert id = "mbt2">
+		insert into tbl_mybatistest(no, name, email, tel, addr, writeday) 
+		values (seq_mybatistest.nextval, #{name} || seq_mybatistest.nextval, 'leeyr@naver.com', '010-234-5678', '서울시 강남구 역삼동', default)
+	</insert>
+	
+	<!-- 데이터를 전달받아서 SQL구문에 넣는 법 
+	2. DTO(VO)로 전달받아서 DB에 insert하는 것입니다.
+		==> 매개변수(parameter타입)는 반드시 풀네임(패키지명)으로 기재해야한다.
+			parameter type이 VO라면 #{VO의 멤버변수명}이다.-->
+	<insert id = "mbt3" parameterType="com.test.spring.MybatisTestVO">
+		insert into tbl_mybetistest(no, name, email, tel, addr, writeday) 
+		values (seq_mybetistest.nextval, #{name}, #{email}, #{tel}, #{addr}, default)
+	</insert>
+	
+	<insert id = "mbt4" parameterType="com.test.spring.MybatisTestVO">
+		insert into tbl_mybetistest(no, name, email, tel, addr, writeday) 
+		values (seq_mybetistest.nextval, #{name}, #{email}, #{tel}, #{addr}, default)
+	</insert>
+	
+	
+	<!-- 데이터를 전달받아서 SQL구문에 넣는 법 
+	3. HashMap으로 전달받아서 DB에 insert하는 것입니다.
+		==> 매개변수(parameter타입)는 반드시 풀네임(패키지명)으로 기재해야한다.
+			parameter type이 HashMap라면 #{KEY값}이다.-->
+	<insert id = "mbt5" parameterType="java.util.HashMap">
+		insert into tbl_mybetistest(no, name, email, tel, addr, writeday) 
+		values (seq_mybetistest.nextval, #{name}, #{email}, #{tel}, #{addr}, default)
+	</insert>
+	
+	<insert id = "mbt6" parameterType="java.util.HashMap">
+		insert into tbl_mybetistest(no, name, email, tel, addr, writeday) 
+		values (seq_mybetistest.nextval, #{heowon.name}, #{heowon.email}, #{heowon.tel}, #{heowon.addr}, default)
+	</insert>
+	
+	
+	
+	<!-- 단일 데이터 조회 -->
+	<select id = "mbt7" parameterType="String" resultType="String">
+		select name
+		from tbl_mybetistest
+		where no = #{no}
+	</select>
+	
+	<!-- 단일 데이터 조회(VO객체 타입, 1개행만 추출) -->
+	<select id = "mbt8" parameterType="String" resultType="com.test.spring.MybatisTestVO">
+		select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest
+		where no = #{no}
+	</select>
+	
+	<!-- 다중 데이터 조회
+		  아무리 List타입을 리턴해야한다 하더라도 resultType은 List타입으로 해주면 오류가 발생한다.
+		  반드시 List타입에 들어간 객체타입(현재 MybatisTestVO)을 사용해야한다.  -->
+	<select id = "mbt9" parameterType="String" resultType="com.test.spring.MybatisTestVO">
+		select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest
+	</select>
+	
+	<!-- 다중 데이터 조회 - 컬럼명과 VO이름이 다른 경우 resultMap을 이용하여 해결한다-->
+	<resultMap type="com.test.spring.MybatisTestVO" id="dataResultMap">
+		<result column="num" 			property="no" 		javaType="int" />
+		<result column="irum" 			property="name" 	javaType="String" />
+		<result column="email" 			property="email" 	javaType="String"  />
+		<result column="telephone" 		property="tel" 		javaType="String" />
+		<result column="address" 		property="addr" 	javaType="String" />
+		<result column="registerday" 	property="writeday" javaType="String" />
+	</resultMap>
+	
+	<select id = "mbt10" resultMap="dataResultMap">
+		select num, irum, email, telephone, address, to_char(registerday, 'yyyy-mm-dd hh24:mi:ss') as registerday
+		from tbl_mybetistest2
+		order by num desc
+	</select>
+
+</mapper>
