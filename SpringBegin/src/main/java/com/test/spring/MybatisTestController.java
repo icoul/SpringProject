@@ -337,7 +337,30 @@ public class MybatisTestController {
 		return "searchEnd6"; // 글쓰기 폼페이지 작성
 	}
 	
+	// 13. 데이터 불러오기
+	// 중요함------------------------
+	// 추출된 결과물에서 검색조건에 해당하는 컬럼명을 선택하고
+	// 그 컬럼명에 대한 검색어를 입력한 후 데이터를 추출하도록 한다.
+	@RequestMapping(value="/mybatis/mybatisTest13.action",method={RequestMethod.GET})
+	public String mybatisTest13(){
 
+		return "search7"; // 글쓰기 폼페이지 작성
+	}
+
+	// 13. 페이지간의 데이터 전송 & 받기 예제
+	//    작업내용 : 폼페이지에서 넘겨온 값을 받아서 서비스단에 넘기기
+	@RequestMapping(value="/mybatis/mybatisTest13End.action",method={RequestMethod.POST})
+	public String mybatisTest13End(HttpServletRequest req){
+
+		//2. 서비스단으로 넘긴다.
+		//   서비스단에서 돌려받는 데이터 타입은 string이 여러개 저장된 List타입이다.
+		List<String> memberList = service.mbt13();
+
+		// view단으로 결과물을 넘긴다.
+		req.setAttribute("memberList", memberList);
+
+		return "searchEnd7"; // 글쓰기 폼페이지 작성
+	}
 }
 
 
