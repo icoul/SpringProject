@@ -349,15 +349,33 @@ public class MybatisTestController {
 
 	// 13. 페이지간의 데이터 전송 & 받기 예제
 	//    작업내용 : 폼페이지에서 넘겨온 값을 받아서 서비스단에 넘기기
-	@RequestMapping(value="/mybatis/mybatisTest13End.action",method={RequestMethod.POST})
+	@RequestMapping(value="/mybatis/mybatisTest13End.action",method={RequestMethod.GET})
 	public String mybatisTest13End(HttpServletRequest req){
-
+		
+		//1. form에서 넘겨온 값을 받는다.
+		String colName = req.getParameter("colName");
+		String searchWord = req.getParameter("searchWord");
+		
+		if (searchWord != null) {
+			searchWord = searchWord.trim();
+		}
+		
 		//2. 서비스단으로 넘긴다.
-		//   서비스단에서 돌려받는 데이터 타입은 string이 여러개 저장된 List타입이다.
-		List<String> memberList = service.mbt13();
+		//   파라미터로 넘어가야 할 값들이 여러개라면 HashMap으로 넘긴다.
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("colName", colName);
+		map.put("searchWord", searchWord);
+		
+		List<MybatisTestVO> memberList = service.mbt13(map);
 
 		// view단으로 결과물을 넘긴다.
 		req.setAttribute("memberList", memberList);
+		
+		if (colName != null && searchWord != null) {
+			req.setAttribute("colName", colName);
+			req.setAttribute("searchWord", searchWord);
+			
+		}
 
 		return "searchEnd7"; // 글쓰기 폼페이지 작성
 	}

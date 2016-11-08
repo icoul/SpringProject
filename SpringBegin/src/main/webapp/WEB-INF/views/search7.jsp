@@ -19,7 +19,7 @@
 	<div align="center">
 		<h1>전체회원을 검색해주는 페이지(/mybatis/mybatisTest13.action)</h1>
 		
-		<form name="myFrm"  action="<%= request.getContextPath() %>/mybatis/mybatisTest13End.action" method="post">  
+		<form name="myFrm"  action="<%= request.getContextPath() %>/mybatis/mybatisTest13End.action" method="get">  
 			번호 : <input type="text" name="no" /><br/>
 			<p>
 			<button type="button" onClick="goSearch();">회원전체조회</button>

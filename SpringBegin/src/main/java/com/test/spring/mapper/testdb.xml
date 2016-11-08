@@ -108,5 +108,19 @@
 		where name like '%'|| #{name} ||'%'
 		order by no desc
 	</select>
+	
+	<!-- 다중 데이터 조회
+		  중요!! : 
+		 1. 데이터로 사용할 때는 #{key명}
+		 2. 식별자(테이블, 컬럼명)으로 사용할 때는 ${key명}
+		 3. myBatis에서 제공하는 if 엘리먼트 안에서 사용할 때는 key명 그대로 쓴다.-->
+	<select id = "mbt13" parameterType="java.util.HashMap" resultType="com.test.spring.MybatisTestVO">
+		select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest
+		<if test="colName != null and searchWord != null">
+			where ${colName} like '%' || #{searchWord} || '%' 
+		</if>
+		order by no desc
+	</select>
 
 </mapper>

@@ -83,4 +83,10 @@ public class MybatisTestService {
 		return memberList;
 		
 	}
+
+	public List<MybatisTestVO> mbt13(HashMap<String, String> map) {
+		List<MybatisTestVO> memberList = dao.mbt13(map);
+		
+		return memberList;
+	}
 }

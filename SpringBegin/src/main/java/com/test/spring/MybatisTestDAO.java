@@ -81,4 +81,10 @@ public class MybatisTestDAO {
 		
 		return memberList;
 	}
+
+	public List<MybatisTestVO> mbt13(HashMap<String, String> map) {
+		List<MybatisTestVO> memberList = sqlSession.selectList("testdb.mbt13", map);
+		
+		return memberList;
+	}
 }
