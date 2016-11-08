@@ -122,5 +122,57 @@
 		</if>
 		order by no desc
 	</select>
+	
+	
+	<!-- 다중 데이터 조회 -->
+	<select id = "mbt14" parameterType="java.util.HashMap" resultType="com.test.spring.MybatisTestVO">
+		select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest
+		where 1=1
+		<if test="colName != null and searchWord != null">
+			and ${colName} like '%' || #{searchWord} || '%' 
+		</if>
+		<if test="dayDifference == 0">
+			and to_date( to_char(sysdate, 'yyyy-mm-dd'), 'yyyy-mm-dd') - to_date( to_char(writeday, 'yyyy-mm-dd'), 'yyyy-mm-dd') = 0 
+		</if>
+		<if test="dayDifference > 0">
+			and to_date( to_char(sysdate, 'yyyy-mm-dd'), 'yyyy-mm-dd') - to_date( to_char(writeday, 'yyyy-mm-dd'), 'yyyy-mm-dd') <![CDATA[<]]>= #{dayDifference} 
+		</if>
+		order by no desc
+	</select>
 
+	<!-- 다중 데이터 조회 -->	
+	
+	<resultMap type="java.util.HashMap" id="dataResultMap2">
+		<result column="no" 		property="no" 		javaType="int" />
+		<result column="name" 		property="name" 	javaType="String" />
+		<result column="email" 		property="email" 	javaType="String"  />
+		<result column="tel" 		property="tel" 		javaType="String" />
+		<result column="addr" 		property="addr" 	javaType="String" />
+		<result column="writeday" 	property="writeday" javaType="String" />
+	</resultMap>
+	
+	<select id = "mbt15" resultMap="dataResultMap2" parameterType="java.util.HashMap">
+		select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest
+		where 1=1
+		<if test="colName != null and searchWord != null">
+			and ${colName} like '%' || #{searchWord} || '%' 
+		</if>
+		<if test="dayDifference == 0">
+			and to_date( to_char(sysdate, 'yyyy-mm-dd'), 'yyyy-mm-dd') - to_date( to_char(writeday, 'yyyy-mm-dd'), 'yyyy-mm-dd') = 0 
+		</if>
+		<if test="dayDifference > 0">
+			and to_date( to_char(sysdate, 'yyyy-mm-dd'), 'yyyy-mm-dd') - to_date( to_char(writeday, 'yyyy-mm-dd'), 'yyyy-mm-dd') <![CDATA[<]]>= #{dayDifference} 
+		</if>
+		order by no desc
+	</select>
+	
+	
+	<!-- 다중 데이터 조회 -->	
+	
+	<insert id = "mbt16" parameterType="java.util.HashMap">
+		insert into tbl_mybetistest values(seq_mybetistest.nextval, #{name}, #{email}, #{tel}, #{addr}, default)
+	</insert>
+	
 </mapper>

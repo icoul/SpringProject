@@ -89,4 +89,23 @@ public class MybatisTestService {
 		
 		return memberList;
 	}
+
+	public List<MybatisTestVO> mbt14(HashMap<String, String> map) {
+		List<MybatisTestVO> memberList = dao.mbt14(map);
+		
+		return memberList;
+	}
+
+	public List<HashMap<String, String>> mbt15(HashMap<String, String> map) {
+		
+		//return타입이 VO가 아닌 HashMap으로 되어진 리스트이다.
+		List<HashMap<String, String>> memberList = dao.mbt15(map);
+		
+		return memberList;
+	}
+
+	public void mbt16(HashMap<String, String> map) {
+		dao.mbt16(map);
+		
+	}
 }

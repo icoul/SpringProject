@@ -380,6 +380,138 @@ public class MybatisTestController {
 		return "searchEnd7"; // 글쓰기 폼페이지 작성
 	}
 	
+	
+	// 14. 데이터 불러오기
+	// 중요함------------------------
+	// 추출된 결과물에서 검색조건에 해당하는 컬럼명을 선택하고
+	// 그 컬럼명에 대한 검색어를 입력한 후 데이터를 추출하도록 한다.
+	// 범위 검색을 할 때 XML파일 속에 SQL문에서 부등호 <= >=를 사용한다.
+	// 그런데 <이 태그로 인식을 하므로  <![CDATA[<]> 으로 표현하면된다.
+	@RequestMapping(value="/mybatis/mybatisTest14.action",method={RequestMethod.GET})
+	public String mybatisTest14(){
+
+		return "search8"; // 글쓰기 폼페이지 작성
+	}
+
+	// 14. 페이지간의 데이터 전송 & 받기 예제
+	//    작업내용 : 폼페이지에서 넘겨온 값을 받아서 서비스단에 넘기기
+	// 범위 검색을 할 때 XML파일 속에 SQL문에서 부등호 <= >=를 사용한다.
+	// 그런데 <이 태그로 인식을 하므로  <![CDATA[<]]> 으로 표현하면된다.
+	@RequestMapping(value="/mybatis/mybatisTest14End.action",method={RequestMethod.GET})
+	public String mybatisTest14End(HttpServletRequest req){
+		
+		//1. form에서 넘겨온 값을 받는다.
+		String colName = req.getParameter("colName");
+		String searchWord = req.getParameter("searchWord");
+		String dayDifference = req.getParameter("dayDifference");
+		
+		if (searchWord != null) {
+			searchWord = searchWord.trim();
+		}
+		
+		//2. 서비스단으로 넘긴다.
+		//   파라미터로 넘어가야 할 값들이 여러개라면 HashMap으로 넘긴다.
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("colName", colName);
+		map.put("searchWord", searchWord);
+		map.put("dayDifference", dayDifference);
+		
+		List<MybatisTestVO> memberList = service.mbt14(map);
+
+		// view단으로 결과물을 넘긴다.
+		req.setAttribute("memberList", memberList);
+		
+		if (colName != null && searchWord != null) {
+			req.setAttribute("colName", colName);
+			req.setAttribute("searchWord", searchWord);
+			req.setAttribute("dayDifference", dayDifference);
+		}
+
+		return "searchEnd8"; // 글쓰기 폼페이지 작성
+	}
+	
+	
+	// 15. 데이터 불러오기
+	// 중요함------------------------
+	// 추출된 결과물에서 검색조건에 해당하는 컬럼명을 선택하고
+	// 그 컬럼명에 대한 검색어를 입력한 후 데이터를 추출하도록 한다.
+	// 범위 검색을 할 때 XML파일 속에 SQL문에서 부등호 <= >=를 사용한다.
+	// 그런데 <이 태그로 인식을 하므로  <![CDATA[<]> 으로 표현하면된다.
+	@RequestMapping(value="/mybatis/mybatisTest15.action",method={RequestMethod.GET})
+	public String mybatisTest15(){
+
+		return "search9"; // 글쓰기 폼페이지 작성
+	}
+
+	// 14. 페이지간의 데이터 전송 & 받기 예제
+	//    작업내용 : 폼페이지에서 넘겨온 값을 받아서 서비스단에 넘기기
+	// 범위 검색을 할 때 XML파일 속에 SQL문에서 부등호 <= >=를 사용한다.
+	// 그런데 <이 태그로 인식을 하므로  <![CDATA[<]]> 으로 표현하면된다.
+	@RequestMapping(value="/mybatis/mybatisTest15End.action",method={RequestMethod.GET})
+	public String mybatisTest15End(HttpServletRequest req){
+		
+		//1. form에서 넘겨온 값을 받는다.
+		String colName = req.getParameter("colName");
+		String searchWord = req.getParameter("searchWord");
+		String dayDifference = req.getParameter("dayDifference");
+		
+		if (searchWord != null) {
+			searchWord = searchWord.trim();
+		}
+		
+		//2. 서비스단으로 넘긴다.
+		//   파라미터로 넘어가야 할 값들이 여러개라면 HashMap으로 넘긴다.
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("colName", colName);
+		map.put("searchWord", searchWord);
+		map.put("dayDifference", dayDifference);
+		
+		List<HashMap<String, String>> memberList = service.mbt15(map);
+
+		// view단으로 결과물을 넘긴다.
+		req.setAttribute("memberList", memberList);
+		
+		if (colName != null && searchWord != null) {
+			req.setAttribute("colName", colName);
+			req.setAttribute("searchWord", searchWord);
+			req.setAttribute("dayDifference", dayDifference);
+		}
+
+		return "searchEnd9"; // 글쓰기 폼페이지 작성
+	}
+	
+	
+	// 16. 데이터 불러오기
+	// 중요함------------------------
+	// HashMap을 사용해서 DB에 insert하기
+	@RequestMapping(value="/mybatis/mybatisTest16.action",method={RequestMethod.GET})
+	public String mybatisTest16(){
+
+		return "add16"; // 글쓰기 폼페이지 작성
+	}
+
+	// 16. 페이지간의 데이터 전송 & 받기 예제
+	// 중요함------------------------
+		// HashMap을 사용해서 DB에 insert하기
+	@RequestMapping(value="/mybatis/mybatisTest16End.action",method={RequestMethod.POST})
+	public String mybatisTest16End(HttpServletRequest req){
+		
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+		String tel = req.getParameter("tel");
+		String addr = req.getParameter("addr");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("name", name);
+		map.put("email", email);
+		map.put("tel", tel);
+		map.put("addr", addr);
+		
+		service.mbt16(map);
+
+		return "addEnd16"; // 글쓰기 폼페이지 작성
+	}
 }
 
 

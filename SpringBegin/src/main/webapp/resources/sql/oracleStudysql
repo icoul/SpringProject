@@ -1,0 +1,262 @@
+create table heowon
+(hid    varchar2(20)  not null
+,name   varchar2(10)
+,jubun  varchar2(13)  not null
+,addr   varchar2(50)
+,email  varchar2(30)  not null
+,constraint PK_heowon_hid primary key(hid)
+,constraint UQ_heowon_jubun unique key(jubun)
+,constraint UQ_heowon_email unique key(email)
+);
+-- primary key는 1개만 unique key는 여러개 가능
+-- foreign key 생성시 복합컬럼으로 생성이 가능
+/*
+      constraint FK_emp_deptno foreign key(gogekid, jepumcode, jumunday) reference (gogekid, jepumcode, jumunday)
+*/
+
+
+
+-- 제 2 정규화에 대해서 ----------------------------------------------------------------------
+/*
+  제2 정규화는 제1정규화를 다 했는데 그 테이블에 식별자가 복합 primary key라면 제2정규화를 해야하고
+  single primary key라면 할 필요 없다.
+  식별자가 아닌 컬럼이 식별자A에 대해 의존적이라면 하나가 바뀌면 그 컬럼도 바뀌어야한다.
+  그러나 또다른 식별자B가 변했다고해서 의존적이지 않은 해당 컬럼은 바뀔 필요가 없으므로
+  이처럼 일부의 식별자에게만 의존적인 컬럼은 부모 컬럼과 함께 따로 분리시켜줘야한다
+  이것이 제2 정규화이다  
+  
+  
+ -- 제 3 정규화에 대해서 -------------------------------------------------------------------
+ 식별자가 아닌 컬럼이 //  식별자가 아닌 컬럼에 의존적이라면 이를 분리하는 것이다.
+  
+  
+-- 제 4 정규화에 대해서 ---------------------------------------------------------------------
+테이블간에 다대다 관계가 있을 경우 이를 1:1 관계로 분리시키는 것으로 두 테이블 사이에 자식 테이블이 하나 생긴다.
+서로 1:다 , 다:1 관계일 경우 다대다 관계라 한다.
+물리적 테이블에서는 존재할 수 없다.
+*/
+
+-- 4정규화의 예시
+/*
+  
+   -----------         -----------
+    고객테이블 1        제품테이블  1
+   -----------         -----------
+   고객ID(P.K)         제품코드(P.K)
+   고객명              제품명
+   전화                정가
+   이메일              판매가
+   주소                수량
+   
+       1                 多
+       多                1
+
+             주문(판매) 多
+            -------------
+            고객ID(F.K)   
+            제품코드(F.K)
+            주문일자(sysdate)
+            주문량
+
+         -----------------------------------------
+         고객ID  제품코드  주문일자        주문량
+         -----------------------------------------
+         onestar  swk  2016-11-04 13:30:00    5
+         onestar  kjk  2016-11-04 13:30:00   15
+         onestar  ggk  2016-11-04 13:30:00   25
+         onestar  ypr  2016-11-04 13:30:00   10
+         onestar  bbr  2016-11-04 13:30:00   10
+         onestar  ace  2016-11-04 13:30:00   30
+
+
+               1(부모)                                                 多(자식)
+        
+              == 주문 ==                                           == 주문상세 ==            
+
+         영수증번호(P.K)  고객ID    주문일자                주문상세일련번호(P.K) 제품코드      주문량    영수증번호(F.K)   
+         ---------------------------------------            -------------------------------------------------------------
+         KH201611041      onestar   2016-11-04 13:30:00      1                    swk             5        KH201611041
+                                                             2                    kjk            15        KH201611041
+                                                             3                    ggk            25        KH201611041
+                                                             4                    ypr            35        KH201611041
+            
+
+  
+      "원서접수" 테이블
+
+    -----------------------
+    접수번호 number (P.K)          
+    성명                      <input type="text" />
+    주민번호                  <input type="text" />
+    주소                      <input type="text" />
+    연락처                    <input type="text" />
+    단과대코드 
+    학과코드 number(F.K)      <input type="text" />   <-- 꽝!!
+    ------------------------  <select> 
+
+                                "컴퓨터공학"
+                                "컴공과"
+                                "컴퓨터"
+                                "컴퓨터 공학"
+
+   "학과" 테이블
+   ---------------
+   학과코드  학과명
+   ----------------
+    1       컴퓨터공학
+    2       전자공학
+    3       기계공학
+    4       경영학
+    ......
+
+
+
+   1 : 다       다 : 다     1 : 1    
+
+
+   "회원" 테이블
+
+   회원가입시
+   
+   필수
+   선택
+
+ create table member
+ ( id        not null
+ , passwd    not null
+ , name      not null
+   ....
+ , marryday  null
+ , job       null
+ , musicjr   null
+ );
+
+
+ create table member
+ ( id           not null   P.K      1
+ , passwd       not null
+ , name         not null
+ , tel          not null 
+ , addr         not null  
+ , email        not null
+ , registerday  not null
+ ); 
+
+ create unique index idx_member
+ on member(id, passwd, name);
+
+
+ select name
+ from member
+ where id = 'hongkd' and passwd = 'qwer1234$';
+
+
+ create table member_detail
+ ( id        not null   P.K & F.K   1
+ , marryday  null
+ , job       null
+ , musicjr   null
+ 
+ );
+
+*/
+
+/*
+  역정규화
+  
+  
+*/
+
+--------------------------------------------------------------------------------
+
+create user amorauser identified by amorauser
+default tablespace users;
+
+grant connect, resource, unlimited tablespace, create view, create database link
+to amorauser;
+
+--------------------------------------------------------------------------------
+
+create table tbl_mybetistest
+(no   number    not null
+,name varchar2(20) not null
+,email varchar2(100)
+,tel varchar2(20)
+,addr varchar2(200)
+,writeday date default sysdate
+);
+
+create sequence seq_mybetistest 
+
+select *
+from tbl_mybetistest
+
+
+create table tbl_mybetistest2
+(num   number    not null
+,irum varchar2(20) not null
+,email varchar2(100)
+,telephone varchar2(20)
+,address varchar2(200)
+,registerday date default sysdate
+,constraint PK_tbl_mybetistest2_num primary key(num)
+);
+
+create sequence seq_mybetistest2
+
+insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
+values (seq_mybetistest2.nextval, '한석규', 'han@naver.com', '010-1111-1111', '서울시 강남구', default);
+
+insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
+values (seq_mybetistest2.nextval, '두석규', 'do@naver.com', '010-2222-2222', '서울시 강남구', default);
+
+insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
+values (seq_mybetistest2.nextval, '세석규', 'se@naver.com', '010-3333-3333', '서울시 강남구', default);
+
+insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
+values (seq_mybetistest2.nextval, '네석규', 'ne@naver.com', '010-4444-4444', '서울시 강남구', default);
+
+commit
+
+select *
+from tbl_mybetistest
+where to_char(writeday, 'yyyy-mm-dd') >= to_char(sysdate-3, 'yyyy-mm-dd')
+order by no desc
+
+
+select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest
+
+			where name like '%' || '송' || '%' 
+
+		order by no desc
+    
+insert into tbl_mybetistest
+values (seq_mybetistest.nextval, '네석규55', 'ne@naver.com', '010-4444-4444', '서울시 강남구', sysdate);
+-------------------------------------------------------------------------------------------------------------------
+-- 먼저 hr에서 아래와같이 한다.
+grant select on departments to amorauser;
+grant select on employees to amorauser;
+------------------------------------------------------------------------------------------------------------------
+select *
+from hr.departments
+
+select *
+from hr.employees
+
+
+create table departments
+as
+select *
+from hr.departments
+
+create table employees
+as
+select *
+from hr.employees
+
+select *
+from departments
+
+select *
+from employees
