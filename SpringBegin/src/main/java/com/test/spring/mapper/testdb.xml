@@ -88,5 +88,25 @@
 		from tbl_mybetistest2
 		order by num desc
 	</select>
+	
+	
+	<!-- 다중 데이터 조회 - 컬럼명과 VO이름이 다른 경우 resultMap을 이용하여 해결한다-->
+	<!-- xml에서 select 문을 쓸 때 컬럼명에 대한 alias명을 VO의 property명으로 사용하여 해결한다. -->	
+	<select id = "mbt11">
+		select num as no, irum as name, email, telephone as tel, address as addr, to_char(registerday, 'yyyy-mm-dd hh24:mi:ss') as writeday
+		from tbl_mybetistest2
+		order by no desc
+	</select>
+	
+	
+	<!-- 다중 데이터 조회 - 컬럼명과 VO이름이 다른 경우 resultMap을 이용하여 해결한다-->
+	<!-- 컬럼 1개짜리 다중행을 추출하도록 해본다.	VO를 사용해도 되지만 컬럼 1개짜리를 위해 굳이 생성하는 것보다
+	SQL문에서 || 를 이용하여 리턴타입을 String으로 사용하는 것이 편하다.	 -->
+	<select id = "mbt12" parameterType="String" resultType="String">
+		select name || ' ' || email || ' ' || tel || ' ' || addr as Info
+		from tbl_mybetistest
+		where name like '%'|| #{name} ||'%'
+		order by no desc
+	</select>
 
 </mapper>

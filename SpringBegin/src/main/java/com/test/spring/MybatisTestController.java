@@ -280,6 +280,64 @@ public class MybatisTestController {
 
 		return "searchEnd4"; // 글쓰기 폼페이지 작성
 	}
+	
+	
+	// 11. 데이터 불러오기
+	// -- 작업내용 : 회원조회 폼 페이지 ==> 서브밋을 하면 검색조건에 맞는 내용을 DB에서 Select해서 웹페이지에 보여지도록 한다.
+	// DB테이블에 있는 컬럼명과 VO의 멤버변수명이 다를 경우 resultMap을 사용하여 해결한다.
+	// xml에서 select 문을 쓸 때 컬럼명에 대한 alias명을 VO의 property명으로 사용하여 해결한다.
+	@RequestMapping(value="/mybatis/mybatisTest11.action",method={RequestMethod.GET})
+	public String mybatisTest11(){
+
+		return "search5"; // 글쓰기 폼페이지 작성
+	}
+
+	// 11. 페이지간의 데이터 전송 & 받기 예제
+	//    작업내용 : 폼페이지에서 넘겨온 값을 받아서 서비스단에 넘기기
+	@RequestMapping(value="/mybatis/mybatisTest11End.action",method={RequestMethod.POST})
+	public String mybatisTest11End(HttpServletRequest req){
+
+		//1. service 단으로  넘긴다.
+		//   service 단에서 돌려받은 데이터타입은
+		//   VO객체가 여러개가 저장된 List타입니다.
+		List<MybatisTestVO> memberList = service.mbt11();
+
+		// view단으로 결과물을 넘긴다.
+		req.setAttribute("memberList", memberList);
+
+		return "searchEnd5"; // 글쓰기 폼페이지 작성
+	}
+	
+	// 12. 데이터 불러오기
+	// -- 작업내용 : 회원조회 폼 페이지 ==> 서브밋을 하면 검색조건에 맞는 내용을 DB에서 Select해서 웹페이지에 보여지도록 한다.
+	//컬럼 1개짜리 다중행을 추출하도록 해본다.
+	// VO를 사용해도 되지만 컬럼 1개짜리를 위해 굳이 생성하는 것보다
+	// SQL문에서 || 를 이용하여 리턴타입을 String으로 사용하는 것이 편하다.
+	@RequestMapping(value="/mybatis/mybatisTest12.action",method={RequestMethod.GET})
+	public String mybatisTest12(){
+
+		return "search6"; // 글쓰기 폼페이지 작성
+	}
+
+	// 12. 페이지간의 데이터 전송 & 받기 예제
+	//    작업내용 : 폼페이지에서 넘겨온 값을 받아서 서비스단에 넘기기
+	@RequestMapping(value="/mybatis/mybatisTest12End.action",method={RequestMethod.POST})
+	public String mybatisTest12End(HttpServletRequest req){
+
+		//1. form 페이지에서 넘어온 값을 받는다.
+		String name = req.getParameter("name");
+		
+		//2. 서비스단으로 넘긴다.
+		//   서비스단에서 돌려받는 데이터 타입은 string이 여러개 저장된 List타입이다.
+		List<String> memberList = service.mbt12(name);
+
+		// view단으로 결과물을 넘긴다.
+		req.setAttribute("memberList", memberList);
+
+		return "searchEnd6"; // 글쓰기 폼페이지 작성
+	}
+	
+
 }
 
 

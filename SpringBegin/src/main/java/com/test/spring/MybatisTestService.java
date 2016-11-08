@@ -68,4 +68,19 @@ public class MybatisTestService {
 		
 		return memberList;
 	}
+
+	public List<MybatisTestVO> mbt11() {
+		
+		List<MybatisTestVO> memberList = dao.mbt11();
+		
+		return memberList;
+	}
+
+	public List<String> mbt12(String name) {
+
+		List<String> memberList = dao.mbt12(name);
+		
+		return memberList;
+		
+	}
 }

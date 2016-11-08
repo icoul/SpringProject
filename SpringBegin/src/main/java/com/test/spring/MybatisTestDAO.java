@@ -69,4 +69,16 @@ public class MybatisTestDAO {
 		
 		return memberList;
 	}
+
+	public List<MybatisTestVO> mbt11() {
+		List<MybatisTestVO> memberList = sqlSession.selectList("testdb.mbt11");
+		
+		return memberList;
+	}
+
+	public List<String> mbt12(String name) {
+		List<String> memberList = sqlSession.selectList("testdb.mbt12", name);
+		
+		return memberList;
+	}
 }
