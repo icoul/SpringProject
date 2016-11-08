@@ -379,6 +379,7 @@ public class MybatisTestController {
 
 		return "searchEnd7"; // 글쓰기 폼페이지 작성
 	}
+	//완료
 }
 
 
