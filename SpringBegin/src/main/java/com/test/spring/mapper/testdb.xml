@@ -146,7 +146,7 @@
 	<resultMap type="java.util.HashMap" id="dataResultMap2">
 		<result column="no" 		property="no" 		javaType="int" />
 		<result column="name" 		property="name" 	javaType="String" />
-		<result column="email" 		property="email" 	javaType="String"  />
+		<result column="email" 		property="email" 	javaType="String" />
 		<result column="tel" 		property="tel" 		javaType="String" />
 		<result column="addr" 		property="addr" 	javaType="String" />
 		<result column="writeday" 	property="writeday" javaType="String" />
@@ -175,4 +175,72 @@
 		insert into tbl_mybetistest values(seq_mybetistest.nextval, #{name}, #{email}, #{tel}, #{addr}, default)
 	</insert>
 	
+	
+	<!-- 다중 데이터 조회 -->	
+	<resultMap type="java.util.HashMap" id="employeeDeptResultMap">
+		<result column="department_id" 		property="DEPARTMENT_ID" 	javaType="String" />
+		<result column="department_name" 	property="DEPARTMENT_NAME" 	javaType="String" />
+		<result column="employee_id" 		property="EMPLOYEE_ID" 		javaType="String" />
+		<result column="ename" 				property="ENAME" 			javaType="String" />
+		<result column="hire_date" 			property="HIRE_DATE" 		javaType="String" />
+		<result column="jubun" 				property="JUBUN" 			javaType="String" />
+		<result column="gender" 			property="GENDER"		 	javaType="String" />
+		<result column="age" 				property="AGE" 				javaType="String" />
+		<result column="yearpay" 			property="YEARPAY"		 	javaType="String" />
+	</resultMap>
+	
+	<select id = "mbt17" resultMap="employeeDeptResultMap" >
+		select *
+		from view_employeeDept
+	</select>
+	
+	
+	<!-- 다중 데이터 조회 -->	
+	<select id = "mbt18" parameterType="java.util.HashMap" resultMap="employeeDeptResultMap" >
+		select *
+		from view_employeeDept
+		where 1=1
+		<if test="department_id != null and department_id == -999">
+			and department_id is null
+		</if>
+		<if test="department_id != null and department_id > 0">
+			and department_id = #{department_id}
+		</if>
+		<if test="gender != null and !gender.equals('전체') ">
+			and gender = #{gender}
+		</if>
+		<if test="ageline != null and !ageline.equals('성별') ">
+			and trunc(age, -1) = #{ageline}
+		</if>
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="deptResultMap">
+		<result column="department_id" 		property="DEPARTMENT_ID" 	javaType="String" />
+		<result column="department_name" 	property="DEPARTMENT_NAME" 	javaType="String" />
+	</resultMap>
+	
+	<select id = "mbt18_dep" resultMap="deptResultMap" >
+		select distinct nvl(department_id, -999) as department_id, nvl(department_name, 'none') as department_name
+		from view_employeedept
+	</select>
+	
+	
+	<!-- 다중 데이터 조회 -->	
+	<select id = "mbt19" parameterType="java.util.HashMap" resultMap="employeeDeptResultMap" >
+		select *
+		from view_employeeDept
+		where 1=1
+		<if test="department_id_Arr != null">
+			and department_id in 
+			<foreach collection="department_id_Arr" item="item" index="i" open="(" close=")" separator="," >
+				${department_id_Arr[i]}
+			</foreach>
+		</if>
+		<if test="gender != null and !gender.equals('전체') ">
+			and gender = #{gender}
+		</if>
+		<if test="ageline != null and !ageline.equals('-10') ">
+			and trunc(age, -1) = #{ageline}
+		</if>
+	</select>
 </mapper>

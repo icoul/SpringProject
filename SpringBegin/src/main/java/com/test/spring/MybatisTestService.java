@@ -108,4 +108,29 @@ public class MybatisTestService {
 		dao.mbt16(map);
 		
 	}
+
+	public List<HashMap<String, String>> mbt17() {
+		
+		List<HashMap<String, String>> list = dao.mbt17();
+		
+		return list;
+	}
+
+	public List<HashMap<String, String>> mbt18_dep() {
+		List<HashMap<String, String>> list = dao.mbt18_dep();
+		
+		return list;
+	}
+
+	public List<HashMap<String, String>> mbt18(HashMap<String, String> map) {
+		List<HashMap<String, String>> list = dao.mbt18(map);
+		
+		return list;
+	}
+
+	public List<HashMap<String, Object>> mbt19(HashMap<String, Object> map) {
+		List<HashMap<String, Object>> list = dao.mbt19(map);
+		
+		return list;
+	}
 }

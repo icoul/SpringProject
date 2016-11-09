@@ -104,4 +104,28 @@ public class MybatisTestDAO {
 		sqlSession.insert("testdb.mbt16", map);
 		
 	}
+
+	public List<HashMap<String, String>> mbt17() {
+		List<HashMap<String, String>> List = sqlSession.selectList("testdb.mbt17");
+		
+		return List;
+	}
+
+	public List<HashMap<String, String>> mbt18_dep() {
+		List<HashMap<String, String>> List = sqlSession.selectList("testdb.mbt18_dep");
+		
+		return List;
+	}
+
+	public List<HashMap<String, String>> mbt18(HashMap<String, String> map) {
+		List<HashMap<String, String>> List = sqlSession.selectList("testdb.mbt18", map);
+		
+		return List;
+	}
+
+	public List<HashMap<String, Object>> mbt19(HashMap<String, Object> map) {
+		List<HashMap<String, Object>> List = sqlSession.selectList("testdb.mbt19", map);
+		
+		return List;
+	}
 }

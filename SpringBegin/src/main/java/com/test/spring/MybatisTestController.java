@@ -512,6 +512,92 @@ public class MybatisTestController {
 
 		return "addEnd16"; // 글쓰기 폼페이지 작성
 	}
+	
+	// 17. 데이터 불러오기
+	@RequestMapping(value="/mybatis/mybatisTest17.action",method={RequestMethod.GET})
+	public String mybatisTest17(){
+
+		return "search10"; // 글쓰기 폼페이지 작성
+	}
+
+	// 17. 페이지간의 데이터 전송 & 받기 예제
+	@RequestMapping(value="/mybatis/mybatisTest17End.action",method={RequestMethod.GET})
+	public String mybatisTest17End(HttpServletRequest req){
+		
+		// return타입을 VO로 사용하지 않고 HashMap을 사용한 List<HashMap<String, String>>으로 하겠다. 
+		List<HashMap<String, String>> empdeptList = service.mbt17();
+		
+		req.setAttribute("empdeptList", empdeptList);
+		
+		return "searchEnd10"; // 글쓰기 폼페이지 작성
+	}
+	
+	
+	// 18. 데이터 불러오기
+	@RequestMapping(value="/mybatis/mybatisTest18.action",method={RequestMethod.GET})
+	public String mybatisTest18(){
+
+		return "search11"; // 글쓰기 폼페이지 작성
+	}
+
+	// 18. 페이지간의 데이터 전송 & 받기 예제
+	@RequestMapping(value="/mybatis/mybatisTest18End.action",method={RequestMethod.GET})
+	public String mybatisTest18End(HttpServletRequest req){
+		
+		String department_id = req.getParameter("department_id");
+		String gender = req.getParameter("gender");
+		String ageline = req.getParameter("ageline");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("department_id", department_id);
+		map.put("gender", gender);
+		map.put("ageline", ageline);
+		
+		// return타입을 VO로 사용하지 않고 HashMap을 사용한 List<HashMap<String, String>>으로 하겠다. 
+		List<HashMap<String, String>> empdeptList = service.mbt18(map);
+		List<HashMap<String, String>> deptList = service.mbt18_dep();
+		
+		req.setAttribute("empdeptList", empdeptList);
+		req.setAttribute("deptList", deptList);
+		req.setAttribute("department_id", department_id);
+		req.setAttribute("gender", gender);
+		req.setAttribute("ageline", ageline);
+		
+		return "searchEnd11"; // 글쓰기 폼페이지 작성
+	}
+	
+	
+	// 18. 데이터 불러오기
+	// SQL문의 Where 절에 들어가는 값이 다수일 때
+	@RequestMapping(value="/mybatis/mybatisTest19.action",method={RequestMethod.GET})
+	public String mybatisTest19(){
+
+		return "search12"; // 글쓰기 폼페이지 작성
+	}
+
+	// 18. 페이지간의 데이터 전송 & 받기 예제
+	@RequestMapping(value="/mybatis/mybatisTest19End.action",method={RequestMethod.GET})
+	public String mybatisTest19End(HttpServletRequest req){
+		
+		String[] department_id_Arr = req.getParameterValues("department_id");
+		String gender = req.getParameter("gender");
+		String ageline = req.getParameter("ageline");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("department_id_Arr", department_id_Arr);
+		map.put("gender", gender);
+		map.put("ageline", ageline);
+		
+		// return타입을 VO로 사용하지 않고 HashMap을 사용한 List<HashMap<String, String>>으로 하겠다. 
+		List<HashMap<String, Object>> empdeptList = service.mbt19(map);
+		
+		req.setAttribute("empdeptList", empdeptList);
+		req.setAttribute("department_id_Arr", department_id_Arr);
+		req.setAttribute("gender", gender);
+		req.setAttribute("ageline", ageline);
+		
+		return "searchEnd12"; // 글쓰기 폼페이지 작성
+	}
 }
 
 
