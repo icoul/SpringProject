@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>차트 통계 페이지</title>
+<title>차트 통계 페이지입니.</title>
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery-2.0.0.js"></script>
 <script type="text/javascript">
