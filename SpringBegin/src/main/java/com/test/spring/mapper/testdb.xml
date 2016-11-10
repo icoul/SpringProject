@@ -243,4 +243,55 @@
 			and trunc(age, -1) = #{ageline}
 		</if>
 	</select>
+	
+	<!-- 차트 데이터 만들기 -->
+	<resultMap type="java.util.HashMap" id="mapGender">
+		<result column="gender"	 property="gender" 	javaType="String" />
+		<result column="cnt" 	 property="cnt" 	javaType="String" />
+		<result column="percent" property="percent" javaType="String" />
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="mapDeptno">
+		<result column="deptno"	 property="deptno" 	javaType="String" />
+		<result column="cnt" 	 property="cnt" 	javaType="String" />
+		<result column="percent" property="percent" javaType="String" />
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="mapAgeline">
+		<result column="ageline" property="ageline" javaType="String" />
+		<result column="cnt" 	 property="cnt" 	javaType="String" />
+		<result column="percent" property="percent" javaType="String" />
+	</resultMap>
+	
+	<select id = "mbt20_gender" resultMap="mapGender" >
+		select decode( grouping(V.gender), 0, V.gender, '전체') as gender
+			, count(V.gender) as cnt
+			, round(count(V.gender) / (select count(*) from employees) * 100 ) as percent
+		from
+		(
+			select case substr(jubun, 7, 1) when '1' then '남' else '여' end as gender
+			from employees
+		)V
+		group by rollup(V.gender)
+	</select>
+	
+	<select id = "mbt20_deptno" resultMap="mapDeptno" >
+		select nvl(decode( grouping(department_id), 0, to_char(department_id), '전체'), 'none') as deptno
+		     , count(*) as cnt
+		     , round(count(*) / (select count(*) from employees) * 100 ) as percent
+		from employees
+		group by rollup(department_id)
+	</select>
+	
+	<select id = "mbt20_ageline" resultMap="mapAgeline" >
+		select decode( grouping(V.ageline), 0, to_char(V.ageline), '전체') as ageline
+		     , count(V.ageline) as cnt
+		     , round(count(V.ageline) / (select count(*) from employees) * 100 ) as percent
+		from
+		(
+		select trunc(extract(year from sysdate) - (to_number(substr(jubun, 1, 2) ) + case when substr(jubun, 7, 1) in ('1', '2') then 1900 else 2000 end) + 1, -1) as ageline
+		from employees
+		)V
+		group by rollup(V.ageline)
+	</select>
 </mapper>

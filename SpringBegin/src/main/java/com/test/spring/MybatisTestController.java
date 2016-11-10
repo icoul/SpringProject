@@ -598,6 +598,41 @@ public class MybatisTestController {
 		
 		return "searchEnd12"; // 글쓰기 폼페이지 작성
 	}
+	
+	
+	// 19. 차트
+	@RequestMapping(value="/mybatis/mybatisTest20.action",method={RequestMethod.GET})
+	public String mybatisTest20(){
+
+		return "chart"; // 글쓰기 폼페이지 작성
+	}
+	
+	// 19. 차트
+	@RequestMapping(value="/mybatis/mybatisTest20End.action",method={RequestMethod.GET})
+	public String mybatisTest20End(HttpServletRequest req){
+		
+		String typeName = req.getParameter("typeName");
+		// 성별(gendefr), 부서번호(deptno), 연령대(ageline)
+		
+		List<HashMap<String, String>> list = null;
+		
+		if ("gender".equals(typeName)) {
+			list = service.mbt20_gender();
+		}
+		
+		else if ("deptno".equals(typeName)) {
+			list = service.mbt20_deptno();
+		}
+		
+		else if ("ageline".equals(typeName)) {
+			list = service.mbt20_ageline();
+		}
+		
+		req.setAttribute("list", list);
+		req.setAttribute("typeName", typeName);
+		
+		return "chartEnd"; // 글쓰기 폼페이지 작성
+	}
 }
 
 
