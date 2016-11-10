@@ -133,4 +133,22 @@ public class MybatisTestService {
 		
 		return list;
 	}
+
+	public List<HashMap<String, String>> mbt20_gender() {
+		List<HashMap<String, String>> list = dao.mbt20_gender();
+		
+		return list;
+	}
+
+	public List<HashMap<String, String>> mbt20_deptno() {
+		List<HashMap<String, String>> list = dao.mbt20_deptno();
+		
+		return list;
+	}
+
+	public List<HashMap<String, String>> mbt20_ageline() {
+		List<HashMap<String, String>> list = dao.mbt20_ageline();
+		
+		return list;
+	}
 }

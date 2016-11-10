@@ -8,58 +8,58 @@ create table heowon
 ,constraint UQ_heowon_jubun unique key(jubun)
 ,constraint UQ_heowon_email unique key(email)
 );
--- primary key´Â 1°³¸¸ unique key´Â ¿©·¯°³ °¡´É
--- foreign key »ı¼º½Ã º¹ÇÕÄÃ·³À¸·Î »ı¼ºÀÌ °¡´É
+-- primary keyëŠ” 1ê°œë§Œ unique keyëŠ” ì—¬ëŸ¬ê°œ ê°€ëŠ¥
+-- foreign key ìƒì„±ì‹œ ë³µí•©ì»¬ëŸ¼ìœ¼ë¡œ ìƒì„±ì´ ê°€ëŠ¥
 /*
       constraint FK_emp_deptno foreign key(gogekid, jepumcode, jumunday) reference (gogekid, jepumcode, jumunday)
 */
 
 
 
--- Á¦ 2 Á¤±ÔÈ­¿¡ ´ëÇØ¼­ ----------------------------------------------------------------------
+-- ì œ 2 ì •ê·œí™”ì— ëŒ€í•´ì„œ ----------------------------------------------------------------------
 /*
-  Á¦2 Á¤±ÔÈ­´Â Á¦1Á¤±ÔÈ­¸¦ ´Ù Çß´Âµ¥ ±× Å×ÀÌºí¿¡ ½Äº°ÀÚ°¡ º¹ÇÕ primary key¶ó¸é Á¦2Á¤±ÔÈ­¸¦ ÇØ¾ßÇÏ°í
-  single primary key¶ó¸é ÇÒ ÇÊ¿ä ¾ø´Ù.
-  ½Äº°ÀÚ°¡ ¾Æ´Ñ ÄÃ·³ÀÌ ½Äº°ÀÚA¿¡ ´ëÇØ ÀÇÁ¸ÀûÀÌ¶ó¸é ÇÏ³ª°¡ ¹Ù²î¸é ±× ÄÃ·³µµ ¹Ù²î¾î¾ßÇÑ´Ù.
-  ±×·¯³ª ¶Ç´Ù¸¥ ½Äº°ÀÚB°¡ º¯Çß´Ù°íÇØ¼­ ÀÇÁ¸ÀûÀÌÁö ¾ÊÀº ÇØ´ç ÄÃ·³Àº ¹Ù²ğ ÇÊ¿ä°¡ ¾øÀ¸¹Ç·Î
-  ÀÌÃ³·³ ÀÏºÎÀÇ ½Äº°ÀÚ¿¡°Ô¸¸ ÀÇÁ¸ÀûÀÎ ÄÃ·³Àº ºÎ¸ğ ÄÃ·³°ú ÇÔ²² µû·Î ºĞ¸®½ÃÄÑÁà¾ßÇÑ´Ù
-  ÀÌ°ÍÀÌ Á¦2 Á¤±ÔÈ­ÀÌ´Ù  
+  ì œ2 ì •ê·œí™”ëŠ” ì œ1ì •ê·œí™”ë¥¼ ë‹¤ í–ˆëŠ”ë° ê·¸ í…Œì´ë¸”ì— ì‹ë³„ìê°€ ë³µí•© primary keyë¼ë©´ ì œ2ì •ê·œí™”ë¥¼ í•´ì•¼í•˜ê³ 
+  single primary keyë¼ë©´ í•  í•„ìš” ì—†ë‹¤.
+  ì‹ë³„ìê°€ ì•„ë‹Œ ì»¬ëŸ¼ì´ ì‹ë³„ìAì— ëŒ€í•´ ì˜ì¡´ì ì´ë¼ë©´ í•˜ë‚˜ê°€ ë°”ë€Œë©´ ê·¸ ì»¬ëŸ¼ë„ ë°”ë€Œì–´ì•¼í•œë‹¤.
+  ê·¸ëŸ¬ë‚˜ ë˜ë‹¤ë¥¸ ì‹ë³„ìBê°€ ë³€í–ˆë‹¤ê³ í•´ì„œ ì˜ì¡´ì ì´ì§€ ì•Šì€ í•´ë‹¹ ì»¬ëŸ¼ì€ ë°”ë€” í•„ìš”ê°€ ì—†ìœ¼ë¯€ë¡œ
+  ì´ì²˜ëŸ¼ ì¼ë¶€ì˜ ì‹ë³„ìì—ê²Œë§Œ ì˜ì¡´ì ì¸ ì»¬ëŸ¼ì€ ë¶€ëª¨ ì»¬ëŸ¼ê³¼ í•¨ê»˜ ë”°ë¡œ ë¶„ë¦¬ì‹œì¼œì¤˜ì•¼í•œë‹¤
+  ì´ê²ƒì´ ì œ2 ì •ê·œí™”ì´ë‹¤  
   
   
- -- Á¦ 3 Á¤±ÔÈ­¿¡ ´ëÇØ¼­ -------------------------------------------------------------------
- ½Äº°ÀÚ°¡ ¾Æ´Ñ ÄÃ·³ÀÌ //  ½Äº°ÀÚ°¡ ¾Æ´Ñ ÄÃ·³¿¡ ÀÇÁ¸ÀûÀÌ¶ó¸é ÀÌ¸¦ ºĞ¸®ÇÏ´Â °ÍÀÌ´Ù.
+ -- ì œ 3 ì •ê·œí™”ì— ëŒ€í•´ì„œ -------------------------------------------------------------------
+ ì‹ë³„ìê°€ ì•„ë‹Œ ì»¬ëŸ¼ì´ //  ì‹ë³„ìê°€ ì•„ë‹Œ ì»¬ëŸ¼ì— ì˜ì¡´ì ì´ë¼ë©´ ì´ë¥¼ ë¶„ë¦¬í•˜ëŠ” ê²ƒì´ë‹¤.
   
   
--- Á¦ 4 Á¤±ÔÈ­¿¡ ´ëÇØ¼­ ---------------------------------------------------------------------
-Å×ÀÌºí°£¿¡ ´Ù´ë´Ù °ü°è°¡ ÀÖÀ» °æ¿ì ÀÌ¸¦ 1:1 °ü°è·Î ºĞ¸®½ÃÅ°´Â °ÍÀ¸·Î µÎ Å×ÀÌºí »çÀÌ¿¡ ÀÚ½Ä Å×ÀÌºíÀÌ ÇÏ³ª »ı±ä´Ù.
-¼­·Î 1:´Ù , ´Ù:1 °ü°èÀÏ °æ¿ì ´Ù´ë´Ù °ü°è¶ó ÇÑ´Ù.
-¹°¸®Àû Å×ÀÌºí¿¡¼­´Â Á¸ÀçÇÒ ¼ö ¾ø´Ù.
+-- ì œ 4 ì •ê·œí™”ì— ëŒ€í•´ì„œ ---------------------------------------------------------------------
+í…Œì´ë¸”ê°„ì— ë‹¤ëŒ€ë‹¤ ê´€ê³„ê°€ ìˆì„ ê²½ìš° ì´ë¥¼ 1:1 ê´€ê³„ë¡œ ë¶„ë¦¬ì‹œí‚¤ëŠ” ê²ƒìœ¼ë¡œ ë‘ í…Œì´ë¸” ì‚¬ì´ì— ìì‹ í…Œì´ë¸”ì´ í•˜ë‚˜ ìƒê¸´ë‹¤.
+ì„œë¡œ 1:ë‹¤ , ë‹¤:1 ê´€ê³„ì¼ ê²½ìš° ë‹¤ëŒ€ë‹¤ ê´€ê³„ë¼ í•œë‹¤.
+ë¬¼ë¦¬ì  í…Œì´ë¸”ì—ì„œëŠ” ì¡´ì¬í•  ìˆ˜ ì—†ë‹¤.
 */
 
--- 4Á¤±ÔÈ­ÀÇ ¿¹½Ã
+-- 4ì •ê·œí™”ì˜ ì˜ˆì‹œ
 /*
   
    -----------         -----------
-    °í°´Å×ÀÌºí 1        Á¦Ç°Å×ÀÌºí  1
+    ê³ ê°í…Œì´ë¸” 1        ì œí’ˆí…Œì´ë¸”  1
    -----------         -----------
-   °í°´ID(P.K)         Á¦Ç°ÄÚµå(P.K)
-   °í°´¸í              Á¦Ç°¸í
-   ÀüÈ­                Á¤°¡
-   ÀÌ¸ŞÀÏ              ÆÇ¸Å°¡
-   ÁÖ¼Ò                ¼ö·®
+   ê³ ê°ID(P.K)         ì œí’ˆì½”ë“œ(P.K)
+   ê³ ê°ëª…              ì œí’ˆëª…
+   ì „í™”                ì •ê°€
+   ì´ë©”ì¼              íŒë§¤ê°€
+   ì£¼ì†Œ                ìˆ˜ëŸ‰
    
-       1                 Òı
-       Òı                1
+       1                 å¤š
+       å¤š                1
 
-             ÁÖ¹®(ÆÇ¸Å) Òı
+             ì£¼ë¬¸(íŒë§¤) å¤š
             -------------
-            °í°´ID(F.K)   
-            Á¦Ç°ÄÚµå(F.K)
-            ÁÖ¹®ÀÏÀÚ(sysdate)
-            ÁÖ¹®·®
+            ê³ ê°ID(F.K)   
+            ì œí’ˆì½”ë“œ(F.K)
+            ì£¼ë¬¸ì¼ì(sysdate)
+            ì£¼ë¬¸ëŸ‰
 
          -----------------------------------------
-         °í°´ID  Á¦Ç°ÄÚµå  ÁÖ¹®ÀÏÀÚ        ÁÖ¹®·®
+         ê³ ê°ID  ì œí’ˆì½”ë“œ  ì£¼ë¬¸ì¼ì        ì£¼ë¬¸ëŸ‰
          -----------------------------------------
          onestar  swk  2016-11-04 13:30:00    5
          onestar  kjk  2016-11-04 13:30:00   15
@@ -69,11 +69,11 @@ create table heowon
          onestar  ace  2016-11-04 13:30:00   30
 
 
-               1(ºÎ¸ğ)                                                 Òı(ÀÚ½Ä)
+               1(ë¶€ëª¨)                                                 å¤š(ìì‹)
         
-              == ÁÖ¹® ==                                           == ÁÖ¹®»ó¼¼ ==            
+              == ì£¼ë¬¸ ==                                           == ì£¼ë¬¸ìƒì„¸ ==            
 
-         ¿µ¼öÁõ¹øÈ£(P.K)  °í°´ID    ÁÖ¹®ÀÏÀÚ                ÁÖ¹®»ó¼¼ÀÏ·Ã¹øÈ£(P.K) Á¦Ç°ÄÚµå      ÁÖ¹®·®    ¿µ¼öÁõ¹øÈ£(F.K)   
+         ì˜ìˆ˜ì¦ë²ˆí˜¸(P.K)  ê³ ê°ID    ì£¼ë¬¸ì¼ì                ì£¼ë¬¸ìƒì„¸ì¼ë ¨ë²ˆí˜¸(P.K) ì œí’ˆì½”ë“œ      ì£¼ë¬¸ëŸ‰    ì˜ìˆ˜ì¦ë²ˆí˜¸(F.K)   
          ---------------------------------------            -------------------------------------------------------------
          KH201611041      onestar   2016-11-04 13:30:00      1                    swk             5        KH201611041
                                                              2                    kjk            15        KH201611041
@@ -82,44 +82,44 @@ create table heowon
             
 
   
-      "¿ø¼­Á¢¼ö" Å×ÀÌºí
+      "ì›ì„œì ‘ìˆ˜" í…Œì´ë¸”
 
     -----------------------
-    Á¢¼ö¹øÈ£ number (P.K)          
-    ¼º¸í                      <input type="text" />
-    ÁÖ¹Î¹øÈ£                  <input type="text" />
-    ÁÖ¼Ò                      <input type="text" />
-    ¿¬¶ôÃ³                    <input type="text" />
-    ´Ü°ú´ëÄÚµå 
-    ÇĞ°úÄÚµå number(F.K)      <input type="text" />   <-- ²Î!!
+    ì ‘ìˆ˜ë²ˆí˜¸ number (P.K)          
+    ì„±ëª…                      <input type="text" />
+    ì£¼ë¯¼ë²ˆí˜¸                  <input type="text" />
+    ì£¼ì†Œ                      <input type="text" />
+    ì—°ë½ì²˜                    <input type="text" />
+    ë‹¨ê³¼ëŒ€ì½”ë“œ 
+    í•™ê³¼ì½”ë“œ number(F.K)      <input type="text" />   <-- ê½!!
     ------------------------  <select> 
 
-                                "ÄÄÇ»ÅÍ°øÇĞ"
-                                "ÄÄ°ø°ú"
-                                "ÄÄÇ»ÅÍ"
-                                "ÄÄÇ»ÅÍ °øÇĞ"
+                                "ì»´í“¨í„°ê³µí•™"
+                                "ì»´ê³µê³¼"
+                                "ì»´í“¨í„°"
+                                "ì»´í“¨í„° ê³µí•™"
 
-   "ÇĞ°ú" Å×ÀÌºí
+   "í•™ê³¼" í…Œì´ë¸”
    ---------------
-   ÇĞ°úÄÚµå  ÇĞ°ú¸í
+   í•™ê³¼ì½”ë“œ  í•™ê³¼ëª…
    ----------------
-    1       ÄÄÇ»ÅÍ°øÇĞ
-    2       ÀüÀÚ°øÇĞ
-    3       ±â°è°øÇĞ
-    4       °æ¿µÇĞ
+    1       ì»´í“¨í„°ê³µí•™
+    2       ì „ìê³µí•™
+    3       ê¸°ê³„ê³µí•™
+    4       ê²½ì˜í•™
     ......
 
 
 
-   1 : ´Ù       ´Ù : ´Ù     1 : 1    
+   1 : ë‹¤       ë‹¤ : ë‹¤     1 : 1    
 
 
-   "È¸¿ø" Å×ÀÌºí
+   "íšŒì›" í…Œì´ë¸”
 
-   È¸¿ø°¡ÀÔ½Ã
+   íšŒì›ê°€ì…ì‹œ
    
-   ÇÊ¼ö
-   ¼±ÅÃ
+   í•„ìˆ˜
+   ì„ íƒ
 
  create table member
  ( id        not null
@@ -162,7 +162,7 @@ create table heowon
 */
 
 /*
-  ¿ªÁ¤±ÔÈ­
+  ì—­ì •ê·œí™”
   
   
 */
@@ -205,16 +205,16 @@ create table tbl_mybetistest2
 create sequence seq_mybetistest2
 
 insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
-values (seq_mybetistest2.nextval, 'ÇÑ¼®±Ô', 'han@naver.com', '010-1111-1111', '¼­¿ï½Ã °­³²±¸', default);
+values (seq_mybetistest2.nextval, 'í•œì„ê·œ', 'han@naver.com', '010-1111-1111', 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬', default);
 
 insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
-values (seq_mybetistest2.nextval, 'µÎ¼®±Ô', 'do@naver.com', '010-2222-2222', '¼­¿ï½Ã °­³²±¸', default);
+values (seq_mybetistest2.nextval, 'ë‘ì„ê·œ', 'do@naver.com', '010-2222-2222', 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬', default);
 
 insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
-values (seq_mybetistest2.nextval, '¼¼¼®±Ô', 'se@naver.com', '010-3333-3333', '¼­¿ï½Ã °­³²±¸', default);
+values (seq_mybetistest2.nextval, 'ì„¸ì„ê·œ', 'se@naver.com', '010-3333-3333', 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬', default);
 
 insert into tbl_mybetistest2 (num, irum, email, telephone, address, registerday)
-values (seq_mybetistest2.nextval, '³×¼®±Ô', 'ne@naver.com', '010-4444-4444', '¼­¿ï½Ã °­³²±¸', default);
+values (seq_mybetistest2.nextval, 'ë„¤ì„ê·œ', 'ne@naver.com', '010-4444-4444', 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬', default);
 
 commit
 
@@ -227,14 +227,14 @@ order by no desc
 select no, name, email, tel, addr, to_char(writeday, 'yyyy-mm-dd hh24:mi:ss') as writeday
 		from tbl_mybetistest
 
-			where name like '%' || '¼Û' || '%' 
+			where name like '%' || 'ì†¡' || '%' 
 
 		order by no desc
     
 insert into tbl_mybetistest
-values (seq_mybetistest.nextval, '³×¼®±Ô55', 'ne@naver.com', '010-4444-4444', '¼­¿ï½Ã °­³²±¸', sysdate);
+values (seq_mybetistest.nextval, 'ë„¤ì„ê·œ55', 'ne@naver.com', '010-4444-4444', 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬', sysdate);
 -------------------------------------------------------------------------------------------------------------------
--- ¸ÕÀú hr¿¡¼­ ¾Æ·¡¿Í°°ÀÌ ÇÑ´Ù.
+-- ë¨¼ì € hrì—ì„œ ì•„ë˜ì™€ê°™ì´ í•œë‹¤.
 grant select on departments to amorauser;
 grant select on employees to amorauser;
 ------------------------------------------------------------------------------------------------------------------
@@ -261,12 +261,12 @@ from departments
 select *
 from employees
 
--- ºÎ¼­¹øÈ£ ºÎ¼­¸é »ç¿ø¹øÈ£ »ç¿ø¸í ÁÖ¹Î¹øÈ£ ¼ºº° ³ªÀÌ ¿¬ºÀ
+-- ë¶€ì„œë²ˆí˜¸ ë¶€ì„œë©´ ì‚¬ì›ë²ˆí˜¸ ì‚¬ì›ëª… ì£¼ë¯¼ë²ˆí˜¸ ì„±ë³„ ë‚˜ì´ ì—°ë´‰
 
 select E.department_id, D.department_name, E.employee_id,
        E.first_name || ' ' || E.last_name as ENAME,
        E.jubun,
-       case when substr(E.jubun, 7, 1) in ('1', '3') then '³²' else '¿©' end as GENDER,
+       case when substr(E.jubun, 7, 1) in ('1', '3') then 'ë‚¨' else 'ì—¬' end as GENDER,
        extract(year from sysdate)- (to_number(substr(E.jubun,1,2)) + case when substr(jubun, 7, 1) in ('1', '2') then 1900 else 2000 end) + 1 as age,
        to_char(nvl(E.salary + (E.commission_pct * E.salary), E.salary) * 12, 'L9,999,999') as yearpay
 from employees E left join departments D
@@ -280,7 +280,7 @@ select E.department_id, D.department_name, E.employee_id,
        E.first_name || ' ' || E.last_name as ENAME,
        to_char(E.hire_date, 'yyyy-mm-dd') as hire_date ,
        E.jubun,
-       case when substr(E.jubun, 7, 1) in ('1', '3') then '³²' else '¿©' end as GENDER,
+       case when substr(E.jubun, 7, 1) in ('1', '3') then 'ë‚¨' else 'ì—¬' end as GENDER,
        extract(year from sysdate)- (to_number(substr(E.jubun,1,2)) + case when substr(jubun, 7, 1) in ('1', '2') then 1900 else 2000 end) + 1 as age,
        to_char(nvl(E.salary + (E.commission_pct * E.salary), E.salary) * 12, 'L9,999,999') as yearpay
 from employees E left   join departments D
@@ -294,3 +294,32 @@ where 1=1 and department_id in
 
 select distinct nvl(department_id, -999) as department_id, nvl(department_name, 'none') as department_name
 from view_employeedept
+
+--ì„±ë³„ë³„
+select decode( grouping(V.gender), 0, V.gender, 'ì „ì²´') as gender
+     , count(V.gender) as cnt
+     , round(count(V.gender) / (select count(*) from employees) * 100 ) as percent
+from
+(
+select case substr(jubun, 7, 1) when '1' then 'ë‚¨' else 'ì—¬' end as gender  
+from employees
+)V
+group by rollup(V.gender)
+
+--ë¶€ì„œë²ˆí˜¸ë³„
+select nvl(decode( grouping(department_id), 0, to_char(department_id), 'ì „ì²´'), 'none') as department_id
+     , count(*) as cnt
+     , round(count(*) / (select count(*) from employees) * 100 ) as percent
+from employees
+group by rollup(department_id)
+
+-- ì—°ë ¹ëŒ€ë³„
+select decode( grouping(V.age), 0, to_char(V.age), 'ì „ì²´') as age
+     , count(V.age) as cnt
+     , round(count(V.age) / (select count(*) from employees) * 100 ) as percent
+from
+(
+select trunc(extract(year from sysdate) - (to_number(substr(jubun, 1, 2) ) + case when substr(jubun, 7, 1) in ('1', '2') then 1900 else 2000 end) + 1, -1) as age
+from employees
+)V
+group by rollup(V.age)

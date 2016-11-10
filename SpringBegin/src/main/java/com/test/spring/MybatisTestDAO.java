@@ -128,4 +128,22 @@ public class MybatisTestDAO {
 		
 		return List;
 	}
+
+	public List<HashMap<String, String>> mbt20_gender() {
+		List<HashMap<String, String>> List = sqlSession.selectList("testdb.mbt20_gender");
+		
+		return List;
+	}
+
+	public List<HashMap<String, String>> mbt20_deptno() {
+		List<HashMap<String, String>> List = sqlSession.selectList("testdb.mbt20_deptno");
+		
+		return List;
+	}
+
+	public List<HashMap<String, String>> mbt20_ageline() {
+		List<HashMap<String, String>> List = sqlSession.selectList("testdb.mbt20_ageline");
+		
+		return List;
+	}
 }
