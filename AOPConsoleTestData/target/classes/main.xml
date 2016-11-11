@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:aop="http://www.springframework.org/schema/aop" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--  
+	- 나머지 하위의 모든 AOP 설정이 사라지고 보조업무 객체의 어노테이션으로 대신한다.
+	- 아래의 <aop:aspectj-autoproxy />가 AOP 관련 어노테이션 동작이 가능하게 설정
+    -->	
+	<!--  AOP 관련 어노테이션 동작이 가능하게 설정 -->		
+	<aop:aspectj-autoproxy />
+
+	<!-- 주 업무 객체 -->
+	<bean id="core" class="com.test.pointcut.Core" />
+
+	<!-- 보조 업무 객체 -->
+	<bean id="cross" class="com.test.pointcut.Cross" />
+	
+
+</beans>
