@@ -48,7 +48,7 @@ public class Logger {
 	- 이번엔 새로운 Advice(보조업무)를 추가할 것이기 때문에 보조업무 객체를 편집 */
 	// 보조업무 추가
 	// -- 메모를 작성하기 전 현재 시간을 로그에 남기는 보조업무 
-	/*public void before() {
+	public void before() {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		String now = sdf.format(new Date());
@@ -57,7 +57,7 @@ public class Logger {
 		
 		//System.out.printf("메모 작성 시간 : %tT\n", Calendar.getInstance());
 	}// end of before()--------------------
-	*/
+	
 
 	/*
 	After Advice 적용하기
@@ -66,12 +66,12 @@ public class Logger {
 	- After Advice는 주업무 실행 중 예외 발생과 무관하게 항상 무조건 실행된다.(자바의 finally와 비슷한 역할임) */
 	// 보조업무 추가
 	// -- 메모를 작성(수정)하면 편집 횟수를 누적해서 로그에 남기는 보조 업무
-	/*int cnt = 0;
+	int cnt = 0;
 	public void after() {
 		
 		cnt++;
 		System.out.printf("   메모 편집 횟수 : %d회\n", cnt);
-	}*/
+	}
 	
 	
 	
@@ -81,11 +81,11 @@ public class Logger {
 	// 보조업무 추가
 	// -- 메모를 삭제한뒤 삭제한 메모의 번호를 로그에 남기는 보조업무
 	// -- 보조 객체의 파라미터명과 XML의 returning 의 파라미터명이 동일해야 한다.
-	/*public void afterreturing(Object seq) {
+	public void afterreturing(Object seq) {
 		
 		System.out.println(">>> 삭제된 메모 번호 : " + seq);
 		
-	}*/
+	}
 	
 	
 	
@@ -96,10 +96,10 @@ public class Logger {
 	// 보조업무 추가
 	// - 메모를 읽다가 예외가 발생하면 로그에 남기는 보조업무
 	// - 보조 객체의 파라미터명과 XML의 throwing의 파라미터명이 동일해야 한다.
-	/*public void afterthrowing(Exception e) {
+	public void afterthrowing(Exception e) {
 		
 		System.out.println("예외 기록 : " + e.getMessage());
-	}*/
+	}
 	
 }
 
