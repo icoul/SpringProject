@@ -36,7 +36,7 @@
 			= logger 객체의 arround 메소드를 m1이라는 Pointcut에 적용하겠다.
 			= 즉, Memo.write() 메소드(m1)가 실행되면 Around Advice 방식으로 Logger.arround() 메서드를 적용시키겠다.. 라는 뜻 
 		-->
-		  <aop:around method="arround" pointcut-ref="m1" /> 
+		 <!-- <aop:around method="arround" pointcut-ref="m1" /> --> 
 		
 		
 		<!--
@@ -47,13 +47,13 @@
 		Before Advice 적용
 		    = 동일한 Pointcut(메소드)에 적용할 것이라서 pointcut-ref 는 그대로 사용하고 Before Advice만 추가하면 된다. 
 	    -->
-	   <!--  <aop:before method="before" pointcut-ref="m1"/>  -->
+	    <aop:before method="before" pointcut-ref="m1"/> 
 		
 		
 		<!-- After Advice 적용
 		    = 동일한 Pointcut(메소드)에 적용할 것이라서 pointcut-ref 는 그대로 사용하고 After Advice만 추가하면 된다. 
 	    -->
-	    <!-- <aop:after method="after" pointcut-ref="m1"/> -->
+	    <aop:after method="after" pointcut-ref="m1"/>
 	    
 	    
 	    <!-- *** 기존의 <aop:around> 태그는 삭제하고 테스트할것!!! 아래의 주의사항을 읽어보고 확인할것~~ -->
@@ -65,7 +65,7 @@
 		      단!! Arround 와 After Returning 을 동시에 사용하면 After Returning 이 반환값을 받지 못하기 때문에 
 		     Arround 는 반드시 제거하고서 After Returning 을 적용한다.  
 	     -->
-	     <!-- <aop:after-returning method="afterreturing" pointcut-ref="m1" returning="seq"/>  -->
+	     <aop:after-returning method="afterreturing" pointcut-ref="m1" returning="seq"/> 
 	     
 	     
 	     
@@ -78,7 +78,7 @@
 			- 주업무에서 예외가 발생하면 실행되는 보조업무
 			- 보조 객체의 파라미터명과 throwing의 파라미터명이 동일해야 한다. 
 		 -->
-		 <!-- <aop:after-throwing method="afterthrowing" pointcut-ref="m1" throwing="e"/> --> 
+		 <aop:after-throwing method="afterthrowing" pointcut-ref="m1" throwing="e"/> 
 	     
 	     
 	</aop:aspect>
