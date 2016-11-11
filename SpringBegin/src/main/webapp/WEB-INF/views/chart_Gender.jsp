@@ -16,11 +16,11 @@ ${demo.css}
 		<script type="text/javascript">
 $(function () {
 	
-	var dataArr = new Array(); // 자바스크립트에서 배열을 선언하는 것
+	/* var dataArr = new Array(); // 자바스크립트에서 배열을 선언하는 것
 	
 	<c:forEach var="list" items="${list}" varStatus="status">
 		dataArr.push("${list.percent}"); //배열속에 값을 넣어주는것
-	</c:forEach>
+	</c:forEach> */
 	
     $('#container').highcharts({
         chart: {
@@ -51,7 +51,7 @@ $(function () {
         series: [{
             name: '성별 구성비율',
             colorByPoint: true,
-            data: [{
+            data: [/* {
                 name: '남자',
                 y: Number(dataArr[0]) // Number 함수를 써야 나온다.
             }, {
@@ -59,7 +59,24 @@ $(function () {
                 y: Number(dataArr[1]),
                 sliced: true,
                 selected: true
-            }]
+            } */
+            	<c:forEach var = "list" items = "${list}" varStatus = "status">
+            		<c:if test = "${status.count < list.size()}">
+            			{
+            				name : '${list.gender}',
+            				y: Number(${list.percent})
+            				<c:if test = "${status.count == list.size()-1}">
+            					,
+            					sliced: true,
+            	                selected: true
+            				</c:if>
+            			}
+	            			<c:if test = "${status.count < list.size()-1}">
+		    					,
+		    				</c:if>
+            		</c:if>
+            	</c:forEach>
+            ]
         }]
     });
 });

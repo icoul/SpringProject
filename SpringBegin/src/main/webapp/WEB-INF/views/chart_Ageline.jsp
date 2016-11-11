@@ -15,11 +15,11 @@ ${demo.css}
 		<script type="text/javascript">
 $(function () {
 
-	var dataArr = new Array(); // 자바스크립트에서 배열을 선언하는 것
+	/* var dataArr = new Array(); // 자바스크립트에서 배열을 선언하는 것
 	
 	<c:forEach var="list" items="${list}" varStatus="status">
 		dataArr.push("${list.percent}"); //배열속에 값을 넣어주는것
-	</c:forEach>
+	</c:forEach> */
 	
 	$('#container').highcharts({
         chart: {
@@ -56,13 +56,24 @@ $(function () {
         series: [{
             name: 'Population',
             data: [
-                ['10대미만', parseInt(dataArr[0])],
+                /* ['10대미만', parseInt(dataArr[0])],
                 ['10대', parseInt(dataArr[1])],
                 ['20대', parseInt(dataArr[2])],
                 ['30대', parseInt(dataArr[3])],
                 ['40대', parseInt(dataArr[4])],
                 ['50대', parseInt(dataArr[5])],
-                ['60대', parseInt(dataArr[6])],
+                ['60대', parseInt(dataArr[6])], */
+                <c:set var = "size" value = "${list.size()}" />
+                <c:forEach var = "list" items = "${list}" varStatus = "status">
+                	<c:if test = "${status.count < size}">
+                		[<c:if test = "${'0'.equals(list.ageline)}">'10대미만'</c:if>
+                		 <c:if test = "${!'0'.equals(list.ageline)}">'${list.ageline}대'</c:if>
+                		 , Number(${list.cnt})]
+                		<c:if test = "${status.count != size-1}">
+                		,
+                		</c:if>
+                	</c:if>
+                </c:forEach>
             ],
             dataLabels: {
                 enabled: true,
