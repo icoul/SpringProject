@@ -15,6 +15,6 @@ public interface InterNoticeService {
 	@Transactional(propagation=Propagation.REQUIRED, isolation= Isolation.READ_COMMITTED, rollbackFor={Throwable.class})
 	int add(NoticeVO vo) throws Throwable; // 글쓰기
 	
-	List<HashMap> list(); // 글목록보기
+	List<HashMap<String, String>> list(); // 글목록보기
 	
 }

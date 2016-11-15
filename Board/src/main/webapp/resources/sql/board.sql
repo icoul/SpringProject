@@ -56,3 +56,6 @@ commit;
 select *
 from tblBoard
 order by seq desc;
+
+
+

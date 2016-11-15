@@ -70,7 +70,7 @@ public class NoticeController {
  	@RequestMapping(value="/list.action", method={RequestMethod.GET} ) 
  	public String list(HttpServletRequest req) {
  		
- 		List<HashMap> list = service.list();
+ 		List<HashMap<String, String>> list = service.list();
  		
  		req.setAttribute("list", list);
  		

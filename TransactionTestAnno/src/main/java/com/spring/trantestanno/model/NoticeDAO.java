@@ -34,8 +34,8 @@ public class NoticeDAO implements InterNoticeDAO {
 
 
 	@Override
-	public List<HashMap> list() {
-		List<HashMap> list = sqlsession.selectList("trantestanno.list");
+	public List<HashMap<String, String>> list() {
+		List<HashMap<String, String>> list = sqlsession.selectList("trantestanno.list");
 		return list;
 	}
 	

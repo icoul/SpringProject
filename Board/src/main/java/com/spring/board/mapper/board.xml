@@ -4,6 +4,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 
 <!-- #12. 루트 엘리먼트 및 네임스페이스 설정하기(이 네임스페이스의 이름은 프로젝트 전체 내에서 반드시 고유해야만 한다.) --> 
-<mapper namespace="trantestanno">
+<mapper namespace="board">
 
+	<!-- #24. 글쓰기 -->
+	<insert id="add" parameterType ="com.spring.board.model.BoardVO" >
+		insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+		values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default)
+	</insert>
+	
+	<!-- #28. 글 목록 가져오기 -->
+	<select id="list" resultType="com.spring.board.model.BoardVO">
+		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+		from tblBoard
+		where status = 1
+		order by seq desc
+	</select>
+	
+	<!-- #32. 글 1개만 가져오기 -->
+	<select id = "view" parameterType="String" resultType = "com.spring.board.model.BoardVO" >
+		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+		from tblBoard
+		where status = 1 and seq = #{seq}
+	</select>
+	
+	<!-- #33. 조회수 업데이트 메서드 -->
+	<update id="updateReadCount" parameterType="String">
+		update tblBoard set readcount = readcount + 1
+		where status = 1 and seq = #{seq}
+	</update>
+	
+	<!-- #38. 글 수정, 삭제 시 비밀번호 체크 -->
+	<select id="checkPW" parameterType="java.util.HashMap" resultType="int">
+		select count(*)
+		from tblBoard
+		where seq = #{seq} and pw = #{pw}
+	</select>
+	
+	<!-- #39. 글 수정 업데이트 -->
+	<update id = "updateContent" parameterType="java.util.HashMap">
+		update tblBoard set subject = #{subject}, content = #{content}
+		where seq = #{seq}
+	</update>
+	
 </mapper>

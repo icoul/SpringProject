@@ -5,8 +5,61 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 글쓰기</title>
+
+<style type="text/css">
+	table, th, td, input, textarea {border: solid gray 1px;}
+	
+	#table {border-collapse: collapse;
+	 		width: 600px;
+	 		}
+	#table th, #table td{padding: 5px;}
+	#table th{width: 120px; background-color: #DDDDDD;}
+	#table td{width: 480px;}
+	.long {width: 470px;}
+	.short {width: 120px;} 		
+</style>
+
+<script type="text/javascript">
+	function goWrite() {
+		var writeFrm = document.writeFrm;
+		writeFrm.submit();
+	}
+
+</script>
+
 </head>
 <body>
-	ㅎㅎㅎㅎ
+	<h1>게시판</h1>
+	
+	
+	<form name="writeFrm" action="<%= request.getContextPath() %>/addEnd.action" method="post">
+	
+		<table id="table">
+			<tr>
+				<th>성명</th>
+				<td><input type="text" name="name" class="short"  /></td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="subject" class="long" /></td>
+			</tr>
+			<tr>
+            	<th>내용</th>
+            	<td><textarea name="content" class="long" style="height: 200px;"></textarea></td>
+         	</tr>
+         		
+			<tr>
+				<th>암호</th>
+				<td><input type="password" name="pw" class="short" /></td>
+			</tr>
+			
+		</table>
+		<br/>
+		
+		<button type="button" onClick="goWrite();">쓰기</button>
+		<button type="button" onClick="history.back();">취소</button>
+	
+	</form>
+
 </body>
 </html>

@@ -30,8 +30,8 @@ public class NoticeService implements InterNoticeService {
 	}
 
 	@Override
-	public List<HashMap> list() {
-		List<HashMap> list = dao.list();
+	public List<HashMap<String, String>> list() {
+		List<HashMap<String, String>> list = dao.list();
 		return list;
 	}
 	
