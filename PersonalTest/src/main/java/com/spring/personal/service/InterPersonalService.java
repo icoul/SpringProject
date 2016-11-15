@@ -1,5 +1,9 @@
 package com.spring.personal.service;
 
-public interface InterPersonalService {
+import java.util.List;
 
+import com.spring.personal.model.BoardVO;
+
+public interface InterPersonalService {
+	List<BoardVO> getMemo();
 }
