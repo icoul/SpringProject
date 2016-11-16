@@ -11,11 +11,13 @@ public class BoardVO {
 	private String readCount; 	// 글 조회수
 	private String regDate;   	// 글쓴시간
 	private String status; 	 	// 글상태
+	private String commentCount; // 댓글 갯수
 	
 	public BoardVO(){}
 	
 	public BoardVO(String seq, String name, String subject, String content, String pw, String readCount, String regDate,
-			String status) {
+			String status, String commentCount) {
+		super();
 		this.seq = seq;
 		this.name = name;
 		this.subject = subject;
@@ -24,6 +26,7 @@ public class BoardVO {
 		this.readCount = readCount;
 		this.regDate = regDate;
 		this.status = status;
+		this.commentCount = commentCount;
 	}
 
 	public String getSeq() {
@@ -89,4 +92,13 @@ public class BoardVO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(String commentCount) {
+		this.commentCount = commentCount;
+	}
+	
 }

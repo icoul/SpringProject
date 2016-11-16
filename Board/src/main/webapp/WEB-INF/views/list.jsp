@@ -15,7 +15,7 @@
 
 <script type = "text/javascript" src = "<%=request.getContextPath() %>/resources/js/jquery-2.0.0.js"></script>
 <script type = "text/javascript">
-
+	
 </script>
 
 <head>
@@ -35,7 +35,13 @@
 		<c:forEach var = "list" items = "${contentList}" varStatus = "status">
 			<tr>
 				<td align = "center">${list.seq}</td>
-				<td><a href = "<%= request.getContextPath() %>/view.action?seq=${list.seq}">${list.subject}</a></td>
+				<td>
+					<a href = "<%= request.getContextPath() %>/view.action?seq=${list.seq}">${list.subject}
+					<c:if test="${list.commentCount > 0}">
+						<span style = "color : red; font-weight : bold; font-style : italic; font-size : smaller; vertical-align : super;">[${list.commentCount}]</span>
+					</c:if>
+					</a>
+				</td>
 				<td>${list.name}</td>
 				<td align = "center">${list.regDate}</td>
 				<td align = "center">${list.readCount}</td>

@@ -5,9 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.board.model.BoardDAO;
 import com.spring.board.model.BoardVO;
+import com.spring.board.model.CommentVO;
 
 //#14. Service 선언
 @Service
@@ -36,7 +40,7 @@ public class BoardService implements InterBoardService {
 		return contentList;
 	} // end of list ----------------------------------
 	
-	//#30. 글 개만 가져오는 메서드
+	//#30. 글 1개만 가져오는 메서드
 	@Override
 	public BoardVO getView(String seq, String readCountCheck){
 		BoardVO vo = dao.getView(seq, readCountCheck);
@@ -56,5 +60,64 @@ public class BoardService implements InterBoardService {
 		}
 		
 		return result;
+	} // end of  edit(HashMap<String,String> map)-------------------------------------------------------
+	
+	//#42. 글 삭제 메서드
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.READ_COMMITTED, rollbackFor={Throwable.class})
+	public int delContent(HashMap<String, String> map) throws Throwable {
+
+		boolean checkpw = dao.checkPW(map);
+		int count = 0;
+		int result = 0;
+		int result2 = 0;
+		int n = 0;
+		
+		if (checkpw) {
+			// #58. 원게시글에 딸린 댓글이 있는지 확인하기
+			count = dao.isExistsComment(map);
+			
+			result = dao.delContent(map); // 글 1개 삭제하기
+			
+			if (count > 0) {
+				result2 = dao.delComment(map); // 원게시글에 딸린 댓글들 삭제하기
+			}
+		}
+		
+		if ((result > 0 && count > 0 && result2 > 0) || (result > 0 && count > 0)) {
+			n = 1;
+		}
+		
+		return n;
 	}
+
+	//#47. Transaction 처리하기
+	//tblComment 테이블에 insert 된 다음에 
+	//tblBoard 테이블에 commentCount 컬럼이 1증가하도록 요청한다
+	//2개 이상의 DML 처리를 해야하므로 Transaction처리를 한다.
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.READ_COMMITTED, rollbackFor={Throwable.class})
+	public int addComment(CommentVO vo) throws Throwable {
+
+		int result = 0;
+		
+		int n = dao.addComment(vo);
+		
+		if (n == 1) {
+			result = dao.updateCommentCount(vo.getParentSeq());
+		}
+		
+		return result;
+	} // end of addComment(CommentVO vo) -------------------------------------------------
+	
+	// #53. 댓글 리스트 가져오기
+	@Override
+	public List<CommentVO> listComment(String seq) {
+
+		List<CommentVO> commentList = dao.listComment(seq);
+		
+		return commentList;
+	} // end of List<CommentVo> listComment() -------------------------------------------------------
+	
+	
 }

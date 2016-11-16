@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.board.model.BoardVO;
+import com.spring.board.model.CommentVO;
 import com.spring.board.service.InterBoardService;
 
 // #13. 컨트롤러 선언
@@ -79,6 +80,11 @@ public class BoardController {
 		session.setAttribute("readCountCheck", "yes");
 		req.setAttribute("vo", vo);
 		
+		// #52. 댓글 내용 가져오기
+		List<CommentVO> commentList = service.listComment(seq);
+		
+		req.setAttribute("commentList", commentList);
+		
 		return "view";
 	}
 	
@@ -113,5 +119,57 @@ public class BoardController {
 		req.setAttribute("result", result);
 		
 		return "editEnd";
+	}
+	
+	
+	// #40. 글 삭제하기 전에 암호 확인하기
+	@RequestMapping(value = "/del.action", method = {RequestMethod.GET})
+	public String del(HttpServletRequest req){
+		
+		String seq = req.getParameter("seq");
+		
+		BoardVO vo = service.getView(seq, "yes");
+		
+		req.setAttribute("vo", vo);
+		
+		return "del";
+	}
+	
+	// #41. 글 삭제하기
+	@RequestMapping(value = "/delEnd.action", method = {RequestMethod.POST})
+	public String delEnd(HttpServletRequest req, BoardVO vo) throws Throwable{
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map.put("seq", vo.getSeq());
+		map.put("pw", vo.getPw());
+		
+		int result = service.delContent(map);
+		
+		req.setAttribute("seq", vo.getSeq());
+		req.setAttribute("result", result);
+		
+		return "delEnd";
+	}
+	
+	// #46. 댓글쓰기
+	@RequestMapping(value = "/addComment.action", method = {RequestMethod.POST})
+	public String addComment(CommentVO vo, HttpServletRequest req) throws Throwable{
+		
+		int result = service.addComment(vo);
+		
+		if (result != 0) {
+			// 댓글 쓰기와 원게시물에 댓글의 갯수 업데이트가 성공한다면
+			req.setAttribute("msg", "댓글쓰기 완료!!");
+		}
+		if (result == 0){
+			// 댓글 쓰기와 원게시물에 댓글의 갯수 업데이트가 실패한다면
+			req.setAttribute("msg", "댓글쓰기 실패!!");
+		}
+		
+		String seq = vo.getParentSeq();
+		req.setAttribute("seq", seq);
+		
+		return "addCommentEnd";
 	}
 }

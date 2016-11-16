@@ -13,8 +13,17 @@
 	</insert>
 	
 	<!-- #28. 글 목록 가져오기 -->
+	<!-- <select id="list" resultType="com.spring.board.model.BoardVO">
+		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+		from tblBoard
+		where status = 1
+		order by seq desc
+	</select> -->
+	
+	<!-- #57. 글 목록 가져오기 -->
 	<select id="list" resultType="com.spring.board.model.BoardVO">
 		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+			   ,commentCount
 		from tblBoard
 		where status = 1
 		order by seq desc
@@ -44,6 +53,46 @@
 	<update id = "updateContent" parameterType="java.util.HashMap">
 		update tblBoard set subject = #{subject}, content = #{content}
 		where seq = #{seq}
+	</update>
+	
+	<!-- #44. 글 수정 업데이트 -->
+	<update id = "delContent" parameterType="java.util.HashMap">
+		update tblBoard set status = 0
+		where seq = #{seq}
+	</update>
+	
+	<!-- #51. 댓글 쓰기 -->
+	<insert id = "addComment" parameterType="com.spring.board.model.CommentVO">
+		insert into tblComment(seq, name, content, regDate, parentSeq, status)
+		values(commentSeq.nextval, #{name}, #{content}, default, #{parentSeq}, default)
+	</insert>
+	
+	<!-- #51. 댓글 쓰기 이후에 tblBoard 테이블에 commentcount 1 추가 -->
+	<update id = "updateCommentCount" parameterType="String">
+		update tblBoard set commentCount = commentCount + 1
+		where seq = #{parentSeq}
+	</update>
+	
+	<!--  #55. 댓글 목록 가져오기 -->
+	<select id = "listComment" parameterType="String" resultType="com.spring.board.model.CommentVO">
+		select seq, name, content, to_char(regDate, 'yyyy-mm-dd hh24:mi:ss') as regDate
+			  ,parentSeq, status
+		from tblComment
+		where status = 1 and parentSeq = #{seq}
+		order by seq desc
+	</select>
+	
+	<!-- #60. 해당 글에 댓글이 몇 개 있는지 확인 -->
+	<select id = "isExistsComment" parameterType="java.util.HashMap" resultType="int">
+		select count(*)
+		from tblComment
+		where parentSeq = #{seq}
+	</select>
+	
+	<!-- #60. 해당 글의 댓글들 삭제하기 -->
+	<update id = "delComment" parameterType="java.util.HashMap">
+		update tblComment set status = 0
+		where parentSeq = #{seq}
 	</update>
 	
 </mapper>

@@ -57,5 +57,37 @@ select *
 from tblBoard
 order by seq desc;
 
+---------------------------------------------------------------------------------------------------------
 
+-- 댓글 테이블 생성
 
+create table tblComment
+(seq        number                not null -- 댓글번호
+,name       varchar2(20)          not null -- 성명
+,content    varchar2(1000)        not null -- 댓글내용
+,regDate    date default sysdate  not null -- 작성일자
+,parentSeq  number                not null -- 게시글 번호
+,status     number(1) default 1   not null -- 글 삭제 여부(1:사용, 2:삭제됨) : 게시글이 삭제되면 자동적으로 삭제되어야한다.
+,constraint PK_tblComment_seq primary key(seq)
+,constraint FK_tblComment_parentSeq foreign key(parentSeq)
+                                    references tblBoard(seq)
+,constraint CK_tblComment_status check (status in (1,0))
+);
+
+create sequence commentSeq
+start with 1
+increment by 1
+nomaxvalue
+nominvalue
+nocycle
+nocache;
+
+/*
+  댓글쓰기를 성공하면 원게시물에 댓글의 갯수를 알려주는 컬럼
+*/
+
+alter table tblBoard
+add commentCount number default 0;
+
+select *
+from tblComment;

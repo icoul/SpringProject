@@ -21,8 +21,19 @@
 	
 	a{tet-decoration : noneW} 		
 </style>
-
+<script type = "text/javascript" src = "<%=request.getContextPath() %>/resources/js/jquery-2.0.0.js"></script>
 <script type = "text/javascript">
+	/* window.beforeunload = redirect();
+	
+	function redirect(){
+		window.location.reload();
+	} */
+	
+	function goWrite(){
+		var addWriteFrm = document.addWriteFrm;
+		addWriteFrm.submit();
+	}
+	
 </script>
 
 </head>
@@ -59,6 +70,31 @@
 		<button type = "button" onClick = "javascript:location.href = '<%=request.getContextPath() %>/list.action'">목록보기</button>
 		<button type = "button" onClick = "javascript:location.href = '<%=request.getContextPath() %>/edit.action?seq=${vo.seq}'">수정</button>
 		<button type = "button" onClick = "javascript:location.href = '<%=request.getContextPath() %>/del.action?seq=${vo.seq}'">삭제</button>
-
+		</br>
+		</br>
+		
+		<!-- #46. 댓글 쓰기 폼 추가 -->
+		
+		<form name = "addWriteFrm" action="<%=request.getContextPath() %>/addComment.action" method = "post">
+			성명 : <input type = "text" name = "name" class="short" />
+			내용 : <input type = "text" name = "content" class="long" />
+			
+			<!-- 댓글이 달리는 원게시물 글번호 -->
+			<input type = "hidden" name = "parentSeq" value = "${vo.seq}" />
+			
+			<button type="button" onClick="goWrite();">쓰기</button>
+		</form>
+		</br>
+		<!-- 댓글 보여주는 창 -->
+		<table id = "table">
+			<c:forEach var = "commentvo" items="${commentList}">
+				<tr>
+					<td>${commentvo.name}</td>
+					<td>${commentvo.content}</td>
+					<td>${commentvo.regDate}</td>
+				</tr>
+			</c:forEach>
+		</table>
+		
 </body>
 </html>
