@@ -8,7 +8,10 @@ public interface InterBoardDAO {
 	
 	int add(BoardVO vo); // 파일 첨부가 없는 글쓰기
 	
-	List<BoardVO> list(); // 글 목록 받아오기
+	//List<BoardVO> list(); // 글 목록 받아오기
+	List<BoardVO> list(HashMap<String,String> map); // 글 리스트 받아오기(검색어가 존재함)
+	
+	int getTotalCount(HashMap<String,String> map); // 페이징 처리에 필요한 글 갯수 구하기
 	
 	BoardVO getView(String seq, String readCountCheck); // 글 1개만 받아오는 메서드
 	

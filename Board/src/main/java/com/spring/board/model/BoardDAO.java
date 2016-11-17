@@ -25,14 +25,32 @@ public class BoardDAO implements InterBoardDAO {
 	} // end of add(BoardVO vo) -------------------------------------------------------
 	
 	// #27. 글 목록 가져오기
+	/*  @Override
+		public List<BoardVO> list(){
+			
+			List<BoardVO> contentList = sqlsession.selectList("board.list");
+			
+			return contentList;
+		} // end of List<BoardVO> list() -----------------------------------------------------
+	*/	
+	
+	//#64. 글목록 가져오기 (검색어가 있음)
 	@Override
-	public List<BoardVO> list(){
+	public List<BoardVO> list(HashMap<String,String> map){
 		
-		List<BoardVO> contentList = sqlsession.selectList("board.list");
+		List<BoardVO> contentList = sqlsession.selectList("board.list", map);
 		
 		return contentList;
-	} // end of List<BoardVO> list() -----------------------------------------------------
+	} // end of list(HashMap<String,String> map) ----------------------------------
 	
+	//#71. 페이징 처리에 필요한 글 갯수 구하기
+	@Override
+	public int getTotalCount(HashMap<String,String> map) {
+		
+		int totalCount = sqlsession.selectOne("board.getTotalCount", map);
+		
+		return totalCount;
+	} // end of getTotalCount(HashMap<String,String> map) ----------------------------------
 	
 	//#31. 글 1개만 가져오는 메서드
 	@Override

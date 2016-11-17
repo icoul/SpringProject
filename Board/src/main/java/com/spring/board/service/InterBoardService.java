@@ -15,7 +15,10 @@ public interface InterBoardService {
 	
 	int add(BoardVO vo); // 파일 첨부가 없는 글쓰기
 	
-	List<BoardVO> list(); // 글 리스트 받아오기(검색어 없음)
+	//List<BoardVO> list(); // 글 리스트 받아오기(검색어 없음)
+	List<BoardVO> list(HashMap<String,String> map); // 글 리스트 받아오기(검색어가 존재함)
+	
+	int getTotalCount(HashMap<String,String> map); // 페이징 처리에 필요한 글 갯수 구하기
 	
 	BoardVO getView(String seq, String readCountCheck); // 글 1개만 받아오는 메서드
 	
@@ -26,4 +29,6 @@ public interface InterBoardService {
 	int addComment(CommentVO vo) throws Throwable; // 댓글 작성하기
 	
 	List<CommentVO> listComment(String seq); // 댓글 리스트 가져오기
+	
+	
 }

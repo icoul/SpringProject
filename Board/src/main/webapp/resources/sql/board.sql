@@ -50,7 +50,157 @@ values(boardSeq.nextval, '팔미자', '팔미자입니다.', '안녕하세요? �
 
 insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
 values(boardSeq.nextval, '구미자', '구미자입니다.', '안녕하세요? 구미자입니다.', '1234', default, default, default);
+-----------------------------------------------------------------------------
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일석규', '일석규입니다.', '안녕하세요? 일석규입니다.', '1234', default, default, default);
 
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '이석규', '이석규입니다.', '안녕하세요? 이석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일석규', '일석규입니다.', '안녕하세요? 일석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '삼석규', '삼석규입니다.', '안녕하세요? 삼석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '사석규', '사석규입니다.', '안녕하세요? 사석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '오석규', '오석규입니다.', '안녕하세요? 오석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '육석규', '육석규입니다.', '안녕하세요? 육석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '칠석규', '칠석규입니다.', '안녕하세요? 칠석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '팔석규', '팔석규입니다.', '안녕하세요? 팔석규입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '구석규', '구석규입니다.', '안녕하세요? 구석규입니다.', '1234', default, default, default);
+------------------------------------------------------------------------
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일설현', '일설현입니다.', '안녕하세요? 일설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '이설현', '이설현입니다.', '안녕하세요? 이설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일설현', '일설현입니다.', '안녕하세요? 일설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '삼설현', '삼설현입니다.', '안녕하세요? 삼설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '사설현', '사설현입니다.', '안녕하세요? 사설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '오설현', '오설현입니다.', '안녕하세요? 오설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '육설현', '육설현입니다.', '안녕하세요? 육설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '칠설현', '칠설현입니다.', '안녕하세요? 칠설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '팔설현', '팔설현입니다.', '안녕하세요? 팔설현입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '구설현', '구설현입니다.', '안녕하세요? 구설현입니다.', '1234', default, default, default);
+-------------------------------------------------------
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일순신', '일순신입니다.', '안녕하세요? 일순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '이순신', '이순신입니다.', '안녕하세요? 이순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일순신', '일순신입니다.', '안녕하세요? 일순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '삼순신', '삼순신입니다.', '안녕하세요? 삼순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '사순신', '사순신입니다.', '안녕하세요? 사순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '오순신', '오순신입니다.', '안녕하세요? 오순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '육순신', '육순신입니다.', '안녕하세요? 육순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '칠순신', '칠순신입니다.', '안녕하세요? 칠순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '팔순신', '팔순신입니다.', '안녕하세요? 팔순신입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '구순신', '구순신입니다.', '안녕하세요? 구순신입니다.', '1234', default, default, default);
+---------------------------------------------------------------------------------------------------------
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일영우', '일영우입니다.', '안녕하세요? 일영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '이영우', '이영우입니다.', '안녕하세요? 이영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일영우', '일영우입니다.', '안녕하세요? 일영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '삼영우', '삼영우입니다.', '안녕하세요? 삼영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '사영우', '사영우입니다.', '안녕하세요? 사영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '오영우', '오영우입니다.', '안녕하세요? 오영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '육영우', '육영우입니다.', '안녕하세요? 육영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '칠영우', '칠영우입니다.', '안녕하세요? 칠영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '팔영우', '팔영우입니다.', '안녕하세요? 팔영우입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '구영우', '구영우입니다.', '안녕하세요? 구영우입니다.', '1234', default, default, default);
+---------------------------------------------------------------------------------------------------------
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일길동', '일길동입니다.', '안녕하세요? 일길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '이길동', '이길동입니다.', '안녕하세요? 이길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '일길동', '일길동입니다.', '안녕하세요? 일길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '삼길동', '삼길동입니다.', '안녕하세요? 삼길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '사길동', '사길동입니다.', '안녕하세요? 사길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '오길동', '오길동입니다.', '안녕하세요? 오길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '육길동', '육길동입니다.', '안녕하세요? 육길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '칠길동', '칠길동입니다.', '안녕하세요? 칠길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '팔길동', '팔길동입니다.', '안녕하세요? 팔길동입니다.', '1234', default, default, default);
+
+insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
+values(boardSeq.nextval, '구길동', '구길동입니다.', '안녕하세요? 구길동입니다.', '1234', default, default, default);
+---------------------------------------------------------------------------------------------------------
 commit;
 
 select *
@@ -91,3 +241,23 @@ add commentCount number default 0;
 
 select *
 from tblComment;
+
+update tblBoard set subject = '안녕하세요. 반갑습니다. 또 만나요. 졸려요. 자고싶어요.'
+where seq = 41
+
+select T.*
+from
+(
+select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount
+from
+(
+select seq, name, case when length(subject) > 20 then substr(subject, 1, 18) || '..'
+                       else subject end as subject
+    , content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+    , commentCount
+from tblBoard
+where status = 1 
+order by seq desc
+)V
+)T
+where T.RNO >= 1 and T.RNO <= 5;

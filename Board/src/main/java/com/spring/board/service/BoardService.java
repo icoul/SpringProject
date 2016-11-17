@@ -32,13 +32,32 @@ public class BoardService implements InterBoardService {
 	} //end of add(BoardVO vo)-------------------------
 	
 	//#26. 글목록 가져오기
+	/*  @Override
+		public List<BoardVO> list(){
+			
+			List<BoardVO> contentList = dao.list();
+			
+			return contentList;
+		} // end of list ----------------------------------
+	*/	
+	
+	//#63. 글목록 가져오기 (검색어가 있음)
 	@Override
-	public List<BoardVO> list(){
+	public List<BoardVO> list(HashMap<String,String> map){
 		
-		List<BoardVO> contentList = dao.list();
+		List<BoardVO> contentList = dao.list(map);
 		
 		return contentList;
-	} // end of list ----------------------------------
+	} // end of list(HashMap<String,String> map) ----------------------------------
+	
+	//#70. 페이징 처리에 필요한 글 갯수 구하기
+	@Override
+	public int getTotalCount(HashMap<String,String> map) {
+		
+		int totalCount = dao.getTotalCount(map);
+		
+		return totalCount;
+	} // end of getTotalCount(HashMap<String,String> map) ----------------------------------
 	
 	//#30. 글 1개만 가져오는 메서드
 	@Override
@@ -118,6 +137,5 @@ public class BoardService implements InterBoardService {
 		
 		return commentList;
 	} // end of List<CommentVo> listComment() -------------------------------------------------------
-	
 	
 }

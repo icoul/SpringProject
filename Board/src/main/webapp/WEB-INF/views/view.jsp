@@ -23,16 +23,12 @@
 </style>
 <script type = "text/javascript" src = "<%=request.getContextPath() %>/resources/js/jquery-2.0.0.js"></script>
 <script type = "text/javascript">
-	/* window.beforeunload = redirect();
-	
-	function redirect(){
-		window.location.reload();
-	} */
 	
 	function goWrite(){
 		var addWriteFrm = document.addWriteFrm;
 		addWriteFrm.submit();
 	}
+	
 	
 </script>
 

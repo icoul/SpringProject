@@ -21,12 +21,58 @@
 	</select> -->
 	
 	<!-- #57. 글 목록 가져오기 -->
+	<!-- 
 	<select id="list" resultType="com.spring.board.model.BoardVO">
 		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
 			   ,commentCount
 		from tblBoard
 		where status = 1
 		order by seq desc
+	</select> -->
+	
+	<!-- #65. 글 목록 가져오기 (검색어 존재) -->
+	<!-- <select id="list" parameterType="java.util.HashMap" resultType="com.spring.board.model.BoardVO">
+		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+			   ,commentCount
+		from tblBoard
+		where status = 1 
+			  <if test="colname != null and search != null">
+			  	  and ${colname} like '%' || #{search} || '%'
+			  </if>
+		order by seq desc
+	</select> -->
+	
+	<!-- #68. 글 목록 가져오기 (검색어 존재, 페이징 처리) -->
+	<select id="list" parameterType="java.util.HashMap" resultType="com.spring.board.model.BoardVO">
+		select T.*
+		from
+		(
+			select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount
+			from
+				(
+					select seq, name, case when length(subject) > 20 then substr(subject, 1, 18) || '..'
+					                       else subject end as subject
+					    , content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+					    , commentCount
+					from tblBoard
+					where status = 1
+						  <if test="colname != null and search != null">
+							  	  and ${colname} like '%' || #{search} || '%'
+						  </if>
+					order by seq desc
+				)V
+			)T
+		where T.RNO >= 1 and T.RNO <![CDATA[<]]>= 5
+	</select>
+	
+	<!-- #72. 총 게시물 건수 구하기 -->
+	<select id = "getTotalCount" parameterType="java.util.HashMap" resultType="int" >
+		select count(*)
+		from tblBoard
+		where status = 1
+			  <if test="colname != null and search != null">
+			  	and ${colname} like '%' || #{search} || '%'
+			  </if>
 	</select>
 	
 	<!-- #32. 글 1개만 가져오기 -->
