@@ -261,3 +261,80 @@ order by seq desc
 )V
 )T
 where T.RNO >= 1 and T.RNO <= 5;
+
+-----------------------------------------------------------------------------------------------
+
+
+rename tblBoard to tblBoard_copy;
+
+rename tblComment to tblComment_copy;
+
+drop sequence boardseq;
+drop sequence commentseq;
+
+alter table tblComment_copy
+drop constraint FK_tblComment_parentSeq;
+
+alter table tblComment_copy
+drop constraint CK_tblComment_status;
+
+alter table tblComment_copy
+drop constraint PK_tblComment_seq;
+
+alter table tblBoard_copy
+drop constraint PK_tblBoard_seq;
+
+alter table tblBoard_copy
+drop constraint CK_tblBoard_status;
+
+
+
+create table tblBoard
+(seq          number                  not null -- 글번호
+,name         Nvarchar2(20)           not null -- 글쓴이
+,subject      Nvarchar2(200)          not null -- 글제목
+,content      Nvarchar2(2000)         not null -- 글내용 -- clob
+,pw           varchar2(20)            not null -- 글비번
+,readCount    number default 0        not null -- 글 조회수
+,regDate      date default sysdate    not null -- 글쓴시간
+,status       number(1) default 1     not null -- 글상태 1: 사용가능, 0: 삭제된글
+,commentCount number    default 0     not null -- 댓글 수
+,groupno      number                  not null -- 그룹번호, 답변글 아닌 원글의 경우 groupno의 값은 groupno컬럼의 최대값 +1로 한다
+,fk_seq       number    default 0     not null -- fk_seq 컬럼은 절대로 foreign key가 아니다 fk_seq 컬럼은 자신의 글(답변글)에 있어서 원글(부모글)이 누구인지에 대한 정보값
+                                               -- 답변글쓰기에 있어서 답변글이라면 fk_seq 컬럼의 값음 원글의 seq컬럼의 값을 가지게 되며
+                                               -- 답변글이 아닌 원글일 경우 0을 가지도록 한다.
+,depth        number    default 0     not null -- 답변글쓰기에 있어서 답변글이라면 원글의 depthno+1을 가지게 되며 원글이면 0
+,constraint PK_tblBoard_seq primary key(seq)
+,constraint CK_tblBoard_status check(status in(0,1))
+);
+
+
+create sequence boardSeq
+start with 1
+increment by 1
+nomaxvalue
+nominvalue
+nocycle
+nocache;
+
+
+create table tblComment
+(seq        number                not null -- 댓글번호
+,name       varchar2(20)          not null -- 성명
+,content    varchar2(1000)        not null -- 댓글내용
+,regDate    date default sysdate  not null -- 작성일자
+,parentSeq  number                not null -- 게시글 번호
+,status     number(1) default 1   not null -- 글 삭제 여부(1:사용, 2:삭제됨) : 게시글이 삭제되면 자동적으로 삭제되어야한다.
+,constraint PK_tblComment_seq primary key(seq)
+,constraint FK_tblComment_parentSeq foreign key(parentSeq)
+                                    references tblBoard(seq)
+,constraint CK_tblComment_status check (status in (1,0))
+);
+
+create sequence commentSeq
+start with 1
+increment by 1
+nomaxvalue
+nominvalue
+nocycle
+nocache;

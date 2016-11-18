@@ -56,6 +56,11 @@
 		</table>
 		<br/>
 		
+		<!-- #77. 답변글쓰기인 경우 부모글의 seq값인 fk_seq값과 부모글의 groupno값과 depth값을 hidden으로 보내준다 -->
+		<input type = "hidden" name = "fk_seq" value = "${fk_seq}" />
+		<input type = "hidden" name = "groupno" value = "${groupno}" />
+		<input type = "hidden" name = "depth" value = "${depth}" />
+		
 		<button type="button" onClick="goWrite();">쓰기</button>
 		<button type="button" onClick="history.back();">취소</button>
 	

@@ -7,9 +7,22 @@
 <mapper namespace="board">
 
 	<!-- #24. 글쓰기 -->
-	<insert id="add" parameterType ="com.spring.board.model.BoardVO" >
+	<!-- <insert id="add" parameterType ="com.spring.board.model.BoardVO" >
 		insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status)
 		values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default)
+	</insert> -->
+	
+	<!-- #74. 글쓰기  -->
+	<insert id="add" parameterType ="com.spring.board.model.BoardVO" >
+		<if test='fk_seq.equals("")'>
+			insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status, groupno)
+			values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default, #{groupno})		
+		</if>
+		
+		<if test='!fk_seq.equals("")'>
+			insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status, groupno, fk_seq, depth)
+			values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default, #{groupno}, #{fk_seq}, #{depth})
+		</if>
 	</insert>
 	
 	<!-- #28. 글 목록 가져오기 -->
@@ -43,6 +56,30 @@
 	</select> -->
 	
 	<!-- #68. 글 목록 가져오기 (검색어 존재, 페이징 처리) -->
+	<!-- <select id="list" parameterType="java.util.HashMap" resultType="com.spring.board.model.BoardVO">
+		select T.*
+		from
+		(
+			select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount
+			from
+				(
+					select seq, name, case when length(subject) > 20 then substr(subject, 1, 18) || '..'
+					                       else subject end as subject
+					    , content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+					    , commentCount
+					from tblBoard
+					where status = 1
+						  <if test="colname != null and search != null">
+							  	  and ${colname} like '%' || #{search} || '%'
+						  </if>
+					order by seq desc
+				)V
+			)T
+		where T.RNO >= #{start} and T.RNO <![CDATA[<]]>= #{end}
+	</select> -->
+	
+	<!-- #75. 글 목록 가져오기 (검색어 존재, 페이징 처리)
+			    답변형 게시판 글 목록	 -->
 	<select id="list" parameterType="java.util.HashMap" resultType="com.spring.board.model.BoardVO">
 		select T.*
 		from
@@ -62,7 +99,7 @@
 					order by seq desc
 				)V
 			)T
-		where T.RNO >= 1 and T.RNO <![CDATA[<]]>= 5
+		where T.RNO >= #{start} and T.RNO <![CDATA[<]]>= #{end}
 	</select>
 	
 	<!-- #72. 총 게시물 건수 구하기 -->

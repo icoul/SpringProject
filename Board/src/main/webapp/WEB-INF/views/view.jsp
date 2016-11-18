@@ -69,6 +69,9 @@
 		</br>
 		</br>
 		
+		<!-- #75. 답변글 쓰기 버튼 추가하기(현재 보고 있는 글이 작성하려는 답변글의 원글[부모글]이 된다. -->
+		<button type = "button" onClick = "javascript:location.href = '<%=request.getContextPath() %>/add.action?fk_seq=${vo.seq}&groupno=${vo.groupno}&depth=${vo.depth}'">답변글쓰기</button>
+		
 		<!-- #46. 댓글 쓰기 폼 추가 -->
 		
 		<form name = "addWriteFrm" action="<%=request.getContextPath() %>/addComment.action" method = "post">

@@ -26,7 +26,19 @@ public class BoardController {
 	// #20. 글쓰기 폼페이지 요청
 	// 지금은 다른 업무가 없으므로 JSP 폼 페이지만 요청한다.
 	@RequestMapping(value="/add.action", method={RequestMethod.GET})
-	public String add(){
+	//public String add(){
+		
+	// #76. 답변 글쓰기가 추가되었으므로 먼저 위의 메서드를 주석처리한다.
+	public String add(HttpServletRequest req){
+		
+		String fk_seq = req.getParameter("fk_seq");
+		String groupno = req.getParameter("groupno");
+		String depth = req.getParameter("depth");
+		
+		req.setAttribute("fk_seq", fk_seq);
+		req.setAttribute("groupno", groupno);
+		req.setAttribute("depth", depth);
+		
 		return "add";
 	}
 	
@@ -111,17 +123,36 @@ public class BoardController {
 		// 페이지바의 시작 페이지 번호 값 만들기
 		startPageNo = ((currentShowPageNo - 1 ) / blocksize ) * blocksize + 1;
 		
+		if ((colname == null || search == null) && (startPageNo - blocksize) > 0) {
+			pagebar += String.format("&nbsp;<a href='list.action?pageNo=%d'>[이전 %d페이지]</a>", startPageNo - blocksize, blocksize);
+		}
+		else if((startPageNo - blocksize) > 0){
+			pagebar += String.format("&nbsp;<a href='list.action?pageNo=%d&colname=%s&search=%s'>[이전 %d페이지]</a>", startPageNo - blocksize, colname, search, blocksize);
+		}
+		
 		while( !(loop > blocksize || startPageNo > totalPage ) ) {
 			
 			if (startPageNo == currentShowPageNo) {
 				pagebar += String.format("&nbsp;<span style = 'color:red; font-weight:bold; text-decoration:underline;'>%d</span>", startPageNo);
 			}
 			else{
-				pagebar += String.format("&nbsp;<a href=''>%d</a>", startPageNo);
+				if (colname == null || search == null) {
+					pagebar += String.format("&nbsp;<a href='list.action?pageNo=%d'>%d</a>", startPageNo, startPageNo);
+				}
+				else{
+					pagebar += String.format("&nbsp;<a href='list.action?pageNo=%d&colname=%s&search=%s'>%d</a>", startPageNo, colname, search, startPageNo);
+				}
 			}
 			
 			loop++;
 			startPageNo++;
+		}
+		
+		if ((colname == null || search == null) && startPageNo <= totalPage) {
+			pagebar += String.format("&nbsp;<a href='list.action?pageNo=%d'>[다음 %d페이지]</a>", startPageNo, blocksize);
+		}
+		else if(startPageNo <= totalPage){
+			pagebar += String.format("&nbsp;<a href='list.action?pageNo=%d&colname=%s&search=%s'>[다음 %d페이지]</a>", startPageNo, colname, search, blocksize);
 		}
 		
 		pagebar += "</ul>";
