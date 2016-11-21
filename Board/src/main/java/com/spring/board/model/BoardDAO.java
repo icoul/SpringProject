@@ -24,6 +24,14 @@ public class BoardDAO implements InterBoardDAO {
 		return n;
 	} // end of add(BoardVO vo) -------------------------------------------------------
 	
+	// #79. groupno의 최대값을 구하는 메서드 , 답글쓰기 기능
+	@Override
+	public int getGroupMaxno(){
+		int max = sqlsession.selectOne("board.getGroupMaxno");
+		
+		return max;
+	}
+	
 	// #27. 글 목록 가져오기
 	/*  @Override
 		public List<BoardVO> list(){

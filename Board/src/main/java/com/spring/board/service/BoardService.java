@@ -27,14 +27,13 @@ public class BoardService implements InterBoardService {
 		/*#78. 이 글쓰기가 원글쓰기인지 아니면 답변글쓰기인지 알아낸 후 입력한다.
 		 * 	     원글쓰기라면 tblBoard테이블의 groupno컬럼의 값은 max값+1 이고
 		 *     답변글쓰기라면 넘겨받은 값 그대로 insert해준다.*/
-		
+		System.out.println("ddd"+vo.getFk_seq());
 		// 원글인지 답글인지 구분하기
-		String fk_seq = vo.getFk_seq();
-		
-		if (fk_seq == null || fk_seq.trim() == null) {
+		if (vo.getFk_seq() == null || vo.getFk_seq().trim().isEmpty() ) {
 			// 원글
-			int groupno = dao.getGroupMaxno() + 1;
-			vo.setGroupno(String.valueOf(groupno));
+			int groupno_int = dao.getGroupMaxno() + 1;
+			String groupno = String.valueOf(groupno_int);
+			vo.setGroupno(groupno);
 		}
 		
 		int n = dao.add(vo);

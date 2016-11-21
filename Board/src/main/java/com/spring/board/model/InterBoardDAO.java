@@ -8,6 +8,8 @@ public interface InterBoardDAO {
 	
 	int add(BoardVO vo); // 파일 첨부가 없는 글쓰기
 	
+	int getGroupMaxno(); // groupno의 최대값을 가져오는 메서드, 답글쓰기 기능
+	
 	//List<BoardVO> list(); // 글 목록 받아오기
 	List<BoardVO> list(HashMap<String,String> map); // 글 리스트 받아오기(검색어가 존재함)
 	

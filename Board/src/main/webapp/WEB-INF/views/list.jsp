@@ -72,6 +72,10 @@
 				<tr>
 					<td align = "center">${list.seq}</td>
 					<td>
+						<!-- #81. 답변글인 경우 제목 앞에 공백을 주겠다 -->
+						<c:if test="${list.depth != 0}">
+							<span style = "color : red; font-style: italic; padding-left : ${list.depth * 20}px;">└Re</span>
+						</c:if>
 						<a href = "#" onClick = "getView(${list.seq});">${list.subject}
 						<c:if test="${list.commentCount > 0}">
 							<span style = "color : red; font-weight : bold; font-style : italic; font-size : smaller; vertical-align : super;">[${list.commentCount}]</span>

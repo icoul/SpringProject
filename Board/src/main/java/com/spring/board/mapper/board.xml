@@ -21,9 +21,15 @@
 		
 		<if test='!fk_seq.equals("")'>
 			insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status, groupno, fk_seq, depth)
-			values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default, #{groupno}, #{fk_seq}, #{depth})
+			values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default, #{groupno}, #{fk_seq}, #{depth}+1)
 		</if>
 	</insert>
+	
+	<!-- #80. 글의 groupno 최대값 구하기, 답글쓰기 -->
+	<select id = "getGroupMaxno" resultType="Int">
+		select nvl( max(groupno), 0)
+		from tblBoard
+	</select>
 	
 	<!-- #28. 글 목록 가져오기 -->
 	<!-- <select id="list" resultType="com.spring.board.model.BoardVO">
@@ -84,19 +90,21 @@
 		select T.*
 		from
 		(
-			select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount
+			select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount, V.groupno, V.fk_seq, V.depth
 			from
 				(
 					select seq, name, case when length(subject) > 20 then substr(subject, 1, 18) || '..'
 					                       else subject end as subject
 					    , content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
-					    , commentCount
+					    , commentCount, groupno, fk_seq, depth
 					from tblBoard
 					where status = 1
 						  <if test="colname != null and search != null">
 							  	  and ${colname} like '%' || #{search} || '%'
 						  </if>
-					order by seq desc
+				    start with fk_seq = 0
+         			connect by prior seq = fk_seq
+				    order siblings by groupno desc, seq asc
 				)V
 			)T
 		where T.RNO >= #{start} and T.RNO <![CDATA[<]]>= #{end}
@@ -114,7 +122,7 @@
 	
 	<!-- #32. 글 1개만 가져오기 -->
 	<select id = "view" parameterType="String" resultType = "com.spring.board.model.BoardVO" >
-		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
+		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate, groupno, depth
 		from tblBoard
 		where status = 1 and seq = #{seq}
 	</select>

@@ -20,6 +20,7 @@
 </style>
 
 <script type="text/javascript">
+	
 	function goWrite() {
 		var writeFrm = document.writeFrm;
 		writeFrm.submit();
@@ -68,3 +69,4 @@
 
 </body>
 </html>
+

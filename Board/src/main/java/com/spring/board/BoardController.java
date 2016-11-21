@@ -45,7 +45,6 @@ public class BoardController {
 	// #21. 글쓰기 완료
 	@RequestMapping(value="/addEnd.action", method={RequestMethod.POST})
 	public String addEnd(BoardVO vo, HttpServletRequest req){
-		
 		int n = service.add(vo);
 		
 		req.setAttribute("n", n);
@@ -64,7 +63,7 @@ public class BoardController {
 		String pageNo = req.getParameter("pageNo");
 		
 		int totalCount = 0;   // 총게시물 건수
-		int sizePerPage = 5;  // 한 페이지당 보여줄 게시물 수
+		int sizePerPage = 10;  // 한 페이지당 보여줄 게시물 수
 		int currentShowPageNo = 1; // 현재 보여주는 페이지 번호
 		int totalPage = 0; // 총 페이지 수(웹브라우저 상에 보여줄 총 페이지 갯수)
 		
