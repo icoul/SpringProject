@@ -33,7 +33,7 @@
 	<h1>게시판</h1>
 	
 	
-	<form name="writeFrm" action="<%= request.getContextPath() %>/addEnd.action" method="post">
+	<form name="writeFrm" action="<%= request.getContextPath() %>/addEnd.action" method="post" enctype="multipart/form-data">
 	
 		<table id="table">
 			<tr>
@@ -48,6 +48,11 @@
             	<th>내용</th>
             	<td><textarea name="content" class="long" style="height: 200px;"></textarea></td>
          	</tr>
+         	
+         	<tr>
+		        <th>파일추가</th>
+		        <td><input type="file" name="attach"/></td>
+		    </tr>   
          		
 			<tr>
 				<th>암호</th>

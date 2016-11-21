@@ -51,14 +51,23 @@ public class BoardDAO implements InterBoardDAO {
 		return contentList;
 	} // end of list(HashMap<String,String> map) ----------------------------------
 	
-	//#71. 페이징 처리에 필요한 글 갯수 구하기
+	
+	// 페이징 처리에 필요한 값을 가져오는 메서드
 	@Override
-	public int getTotalCount(HashMap<String,String> map) {
+	public ListVO getListVO(HashMap<String, String> map, String pageNo) {
+
+		int currentShowPageNo = Integer.parseInt(pageNo);
+		int sizePerPage = 5;
+		int loop = 1;
+		int blocksize = 5;
 		
 		int totalCount = sqlsession.selectOne("board.getTotalCount", map);
 		
-		return totalCount;
-	} // end of getTotalCount(HashMap<String,String> map) ----------------------------------
+		ListVO lvo = new ListVO(currentShowPageNo, sizePerPage, loop, blocksize, totalCount);
+		
+		return lvo;
+		
+	}// end of getListVO(HashMap<String, String> map, String pageNo) ----------------------------------
 	
 	//#31. 글 1개만 가져오는 메서드
 	@Override

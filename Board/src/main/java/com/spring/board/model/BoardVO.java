@@ -1,5 +1,7 @@
 package com.spring.board.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 // #19. VO 생성하기
 	// 먼저, 오라클에서 tblBoard를 생성
 
@@ -14,6 +16,12 @@ public class BoardVO {
 	private String status; 	 	// 글상태
 	private String commentCount; // 댓글 갯수
 	
+	private String fileName;            //WAS(톰캣)에 저장될 파일명(201611211433243323421.png)
+	private String orgFileName;         //원본 파일명(강아지.png) 사용자가 파일을 upload하거나, downlaod할 때 사용되어지는 파일명
+	private String fileSize;            // 파일 크기, 단위는 byte이다.
+
+	private MultipartFile attach;       // 진짜 파일 ==> WAS(톰캣)에 저장된다. tbl_board의 컬럼이 아니다.
+	
 	// #73. 먼저 오라클에서 기존 테이블을 모두 제거한 후 새로이 만들고 추가해야한다.
 	
 	private String groupno;		// 그룹번호, 답변글 아닌 원글의 경우 groupno의 값은 groupno컬럼의 최대값 +1로 한다
@@ -23,10 +31,11 @@ public class BoardVO {
 	private String depth;		// 답변글쓰기에 있어서 답변글이라면 원글의 depthno+1을 가지게 되며 원글이면 0
 	
 	public BoardVO(){}
-	
+
 	public BoardVO(String seq, String name, String subject, String content, String pw, String readCount, String regDate,
-			String status, String commentCount, String groupno, String fk_seq, String depth) {
-		super();
+			String status, String commentCount, String fileName, String orgFileName, String fileSize,
+			MultipartFile attach, String groupno, String fk_seq, String depth) {
+
 		this.seq = seq;
 		this.name = name;
 		this.subject = subject;
@@ -36,11 +45,14 @@ public class BoardVO {
 		this.regDate = regDate;
 		this.status = status;
 		this.commentCount = commentCount;
+		this.fileName = fileName;
+		this.orgFileName = orgFileName;
+		this.fileSize = fileSize;
+		this.attach = attach;
 		this.groupno = groupno;
 		this.fk_seq = fk_seq;
 		this.depth = depth;
 	}
-
 
 	public String getSeq() {
 		return seq;
@@ -112,6 +124,38 @@ public class BoardVO {
 
 	public void setCommentCount(String commentCount) {
 		this.commentCount = commentCount;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getOrgFileName() {
+		return orgFileName;
+	}
+
+	public void setOrgFileName(String orgFileName) {
+		this.orgFileName = orgFileName;
+	}
+
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public MultipartFile getAttach() {
+		return attach;
+	}
+
+	public void setAttach(MultipartFile attach) {
+		this.attach = attach;
 	}
 
 	public String getGroupno() {

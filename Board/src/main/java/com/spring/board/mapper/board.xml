@@ -99,7 +99,7 @@
 					    , commentCount, groupno, fk_seq, depth
 					from tblBoard
 					where status = 1
-						  <if test="colname != null and search != null">
+						  <if test='colname != null and search != null'>
 							  	  and ${colname} like '%' || #{search} || '%'
 						  </if>
 				    start with fk_seq = 0

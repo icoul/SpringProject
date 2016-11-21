@@ -3,12 +3,9 @@ package com.spring.board.service;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.spring.board.model.BoardVO;
 import com.spring.board.model.CommentVO;
+import com.spring.board.model.ListVO;
 
 // #14. Service 선언
 public interface InterBoardService {
@@ -18,7 +15,7 @@ public interface InterBoardService {
 	//List<BoardVO> list(); // 글 리스트 받아오기(검색어 없음)
 	List<BoardVO> list(HashMap<String,String> map); // 글 리스트 받아오기(검색어가 존재함)
 	
-	int getTotalCount(HashMap<String,String> map); // 페이징 처리에 필요한 글 갯수 구하기
+	ListVO getListVO(HashMap<String, String> map, String pageNo); // 페이징 처리에 필요한 값 가져오기
 	
 	BoardVO getView(String seq, String readCountCheck); // 글 1개만 받아오는 메서드
 	
@@ -29,6 +26,4 @@ public interface InterBoardService {
 	int addComment(CommentVO vo) throws Throwable; // 댓글 작성하기
 	
 	List<CommentVO> listComment(String seq); // 댓글 리스트 가져오기
-	
-	
 }

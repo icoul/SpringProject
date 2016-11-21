@@ -28,7 +28,7 @@
 		</c:if>
 	}
 	
-	function goSearch(){
+	function goSearch(){ // 검색기능
 		
 		var searchFrm = document.searchFrm
 		var search = $("#search").val();
@@ -41,7 +41,20 @@
 		}
 	}
 	
-	function getView(seq){
+	function getPagebar(pageNo){ // 페이지 이동 기능
+		
+		<c:if test = "${empty search or empty colname}">
+			document.getElementsByName("colname")[0].value = "subject";
+			document.getElementsByName("search")[0].value = null;
+		</c:if>
+
+		document.getElementsByName("pageNo")[0].value = pageNo;
+		
+		var pageFrm = document.pageFrm
+		pageFrm.submit();
+	}
+	
+	function getView(seq){ // 단일 글 보기 기능
 		
 		var readCountCheck = "no";
 		document.getElementsByName("seq")[0].value = seq;
@@ -90,9 +103,14 @@
 		</table>
 	</form>
 	<br/>
-	<div align = "center" style = "width : 400px; margin-left : 100px;">
-		${pagebar}
-	</div>
+	<form name = "pageFrm" action = "<%= request.getContextPath() %>/list.action" method = "get">
+		<div align = "center" style = "width : 400px; margin-left : 100px;">
+			${pagebar}
+		</div>
+		<input type = "hidden" name = "pageNo" value = "" />
+		<input type = "hidden" name = "search" value = "${search}" />
+		<input type = "hidden" name = "colname" value = "${colname}" />
+	</form>
 	
 	<!-- #61. 글 검색폼 추가하기 : 제목, 내용, 글쓴이 -->
 	<form name = "searchFrm" action = "<%= request.getContextPath() %>/list.action" method = "get">

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.board.model.BoardDAO;
 import com.spring.board.model.BoardVO;
 import com.spring.board.model.CommentVO;
+import com.spring.board.model.ListVO;
 
 //#14. Service 선언
 @Service
@@ -50,7 +51,16 @@ public class BoardService implements InterBoardService {
 			
 			return contentList;
 		} // end of list ----------------------------------
-	*/	
+	*/
+	
+	// 페이징 처리에 필요한 값을 가져오는 메서드
+	@Override
+	public ListVO getListVO(HashMap<String, String> map, String pageNo) {
+		
+		ListVO lvo = dao.getListVO(map, pageNo);
+		
+		return lvo;
+	}
 	
 	//#63. 글목록 가져오기 (검색어가 있음)
 	@Override
@@ -60,15 +70,6 @@ public class BoardService implements InterBoardService {
 		
 		return contentList;
 	} // end of list(HashMap<String,String> map) ----------------------------------
-	
-	//#70. 페이징 처리에 필요한 글 갯수 구하기
-	@Override
-	public int getTotalCount(HashMap<String,String> map) {
-		
-		int totalCount = dao.getTotalCount(map);
-		
-		return totalCount;
-	} // end of getTotalCount(HashMap<String,String> map) ----------------------------------
 	
 	//#30. 글 1개만 가져오는 메서드
 	@Override
@@ -148,5 +149,4 @@ public class BoardService implements InterBoardService {
 		
 		return commentList;
 	} // end of List<CommentVo> listComment() -------------------------------------------------------
-	
 }

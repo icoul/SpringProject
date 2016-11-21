@@ -552,3 +552,19 @@ select T.*
 				)V
 			)T
 		where T.RNO >= 1 and T.RNO <= 10;
+    
+select *
+from tblBoard
+order by groupno;
+
+commit;
+
+
+alter table tblBoard
+add fileName varchar2(255);-- WAS(톰캣)에 저장될 파일명(201611211433243323421.png)
+
+alter table tblBoard
+add orgFileName varchar2(255);-- 원본 파일명(강아지.png) 사용자가 파일을 upload하거나, downlaod할 때 사용되어지는 파일명
+
+alter table tblBoard
+add fileSize  number;-- 파일 크기, 단위는 byte이다.
