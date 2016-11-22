@@ -24,6 +24,15 @@ public class BoardDAO implements InterBoardDAO {
 		return n;
 	} // end of add(BoardVO vo) -------------------------------------------------------
 	
+	// #88. 파일첨부 글쓰기
+	@Override
+	public int add_withFile(BoardVO vo) {
+		
+		int n = sqlsession.insert("board.add_withFile",vo);
+		
+		return n;
+	}
+	
 	// #79. groupno의 최대값을 구하는 메서드 , 답글쓰기 기능
 	@Override
 	public int getGroupMaxno(){
@@ -158,5 +167,22 @@ public class BoardDAO implements InterBoardDAO {
 		int result = sqlsession.update("board.delComment", map);
 		
 		return result;
+	}
+	
+	
+	// 검색어 입력시 자동 글 완성
+	@Override
+	public List<String> searchWordCompleteList(HashMap<String, String> map) {
+
+		if (!map.get("search").trim().isEmpty()) {
+			
+			List<String> searchWordCompleteList = sqlsession.selectList("board.searchWordCompleteList", map);
+			
+			return searchWordCompleteList;
+		}
+		
+		else {
+			return null;
+		}
 	}
 }

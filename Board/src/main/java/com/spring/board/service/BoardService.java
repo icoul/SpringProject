@@ -43,6 +43,25 @@ public class BoardService implements InterBoardService {
 		
 	} //end of add(BoardVO vo)-------------------------
 	
+	// #87. 파일첨부 글쓰기
+	@Override
+	public int add_withFile(BoardVO vo) {
+		/*  이 글쓰기가 원글쓰기인지 아니면 답변글쓰기인지 알아낸 후 입력한다.
+		 * 	원글쓰기라면 tblBoard테이블의 groupno컬럼의 값은 max값+1 이고
+		 *  답변글쓰기라면 넘겨받은 값 그대로 insert해준다.*/
+		
+		if (vo.getFk_seq() == null || vo.getFk_seq().trim().isEmpty() ) {
+			// 원글
+			int groupno_int = dao.getGroupMaxno() + 1;
+			String groupno = String.valueOf(groupno_int);
+			vo.setGroupno(groupno);
+		}
+		
+		int n = dao.add_withFile(vo);
+		
+		return n;
+	}
+	
 	//#26. 글목록 가져오기
 	/*  @Override
 		public List<BoardVO> list(){
@@ -149,4 +168,21 @@ public class BoardService implements InterBoardService {
 		
 		return commentList;
 	} // end of List<CommentVo> listComment() -------------------------------------------------------
+	
+	
+	// 검색어 입력시 자동 글 완성
+	@Override
+	public List<String> searchWordCompleteList(HashMap<String, String> map) {
+
+		if (!map.get("search").trim().isEmpty()) {
+			
+			List<String> searchWordCompleteList = dao.searchWordCompleteList(map);
+			
+			return searchWordCompleteList;
+		}
+		
+		else {
+			return null;
+		}
+	}
 }

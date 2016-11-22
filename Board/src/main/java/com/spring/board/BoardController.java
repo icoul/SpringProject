@@ -1,9 +1,13 @@
 package com.spring.board;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +32,7 @@ public class BoardController {
 	
 	// #86. FileManager 의존 객체 주입
 	@Autowired
-	private FileManager fManager;
+	private FileManager fileManager;
 	
 	// #20. 글쓰기 폼페이지 요청
 	// 지금은 다른 업무가 없으므로 JSP 폼 페이지만 요청한다.
@@ -51,12 +55,140 @@ public class BoardController {
 	
 	// #21. 글쓰기 완료
 	@RequestMapping(value="/addEnd.action", method={RequestMethod.POST})
-	public String addEnd(BoardVO vo, MultipartHttpServletRequest req){
-		int n = service.add(vo);
+	public String addEnd(BoardVO vo, MultipartHttpServletRequest req, HttpSession session){
+		/*
+		       사용자가 쓴 글에 파일이 첨부가 된것이지 
+		       아니면 파일첨부가 안된것인지 구분을 지어주어야 한다.
+		 */
+		// **** 첨부파일이 있는지 없는지 ? ****
+		if(!vo.getAttach().isEmpty()) {
+			// attach가 비어있지 않다면(즉, 첨부파일이 있는 경우라면)
+
+			/*
+			   1. 사용자가 보낸 파일을 WAS(톰캣)의 특정 폴더에 저장해주어야 한다.
+			   >>>> 파일이 업로드 되어질 특정 경로(폴더)지정해주기
+			        우리는 WAS 의 webapp/resources/files 라는 폴더로 지정해준다.
+			 */
+
+			// WAS 의 webapp 의 절대경로를 알아와야 한다. 
+			String root = session.getServletContext().getRealPath("/"); 
+			String path = root + "resources"+File.separator+"files";
+			// path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다. 
+
+			System.out.println(">>>> 확인용 path ==> " + path); 
+			// >>>> 확인용 path ==> C:\springworkspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Board\resources\files 
+
+
+			// 2. 파일첨부를 위한 변수의 설정 및 값을 초기화한 후 파일올리기
+			String newFileName = "";
+			// WAS(톰캣) 디스크에 저장할 파일명 
+
+			byte[] bytes = null;
+			// 첨부파일을 WAS(톰캣) 디스크에 저장할때 사용되는 용도 
+
+			long fileSize = 0;
+			// 파일크기를 읽어오기 위한 용도
+
+			try {
+				bytes = vo.getAttach().getBytes(); 
+				// getBytes()는 첨부된 파일을 바이트단위로 파일을 다 읽어오는 것이다. 
+				/* 2-1. 첨부된 파일을 읽어오는 것
+					    첨부한 파일이 강아지.png 이라면
+					    이파일을 WAS(톰캣) 디스크에 저장시키기 위해
+					    byte[] 타입으로 변경해서 받아들인다.
+				 */ 
+				newFileName = fileManager.doFileUpload(bytes, vo.getAttach().getOriginalFilename(), path);
+				/* 2-2. 첨부한 파일의 확장자명을 알려고 아래와 같이 한다.
+				        vo.getAttach().getOriginalFilename() 은 첨부파일의 파일이름을 말한다.
+				        예를 들어, 강아지.png 을 첨부파일로 올리면
+				        vo.getAttach().getOriginalFilename() 이 String 타입으로 "강아지.png" 을 얻어오는 것이다. 
+				        그리고 마지막 fileManager.doFileUpload() 메소드에서
+				        마지막 . 을 기준으로 그 나머지 글자만 취해오도록 되어있다. 
+				        즉, .png 라는 확장자만 얻어온다.
+				 */
+
+				System.out.println(">>>> 확인용 newFileName ==> " + newFileName); 
+
+				// 3. BoardVO vo 에 fileName 값과 orgFilename 값과 fileSize 값을 넣어주기 
+				vo.setFileName(newFileName);
+				// WAS(톰캣)에 저장될 파일명(20161121324325454354353333432.png) 
+
+				vo.setOrgFileName(vo.getAttach().getOriginalFilename());
+				// 진짜 파일명(강아지.png)
+				// 사용자가 파일을 업로드 하거나 파일을 다운로드 할때 사용되어지는 파일명 
+
+				fileSize = vo.getAttach().getSize();
+				// 첨부한 파일의 파일크기인데 리턴타입이 long 타입이다.
+
+				vo.setFileSize(String.valueOf(fileSize));
+				// 첨부한 파일의 크기를 String 타입으로 변경해서 저장함.
+
+			} catch (Exception e) {
+
+			}
+
+		}
+
+		//	int n = service.add(vo);
+
+		/*	#99. 파일첨부가 없는 경우 또는 파일첨부가 있는 경우
+	         Service 단으로 호출하기
+	         먼저 위의 int n = service.add(vo); 부분을
+	         주석처리하고서 아래처럼 한다.
+		 */
+		int n = 0;
+		if(vo.getAttach().isEmpty()) {
+			// 파일첨부가 없다면
+			n = service.add(vo);
+		}
+
+		if(!vo.getAttach().isEmpty()) {
+			// 파일첨부가 있다면
+			n = service.add_withFile(vo);
+		}
 		
 		req.setAttribute("n", n);
 		
 		return "addEnd";
+	}
+	
+	// #90. 다운로드
+	@RequestMapping(value="/download.action", method = {RequestMethod.GET})
+	public void download(HttpServletRequest req, HttpServletResponse res , HttpSession session){
+		
+		String seq = req.getParameter("seq");
+		String readCountCheck = "yes";
+		
+		BoardVO vo = service.getView(seq, readCountCheck);
+		// 조회수 증가 없이 가져오기?
+		
+		String fileName = vo.getFileName();
+		String orgFileName = vo.getOrgFileName();
+		
+		// 첨부파일이 저장되어있는 WAS의 디스크 경로명을 알아와야만 다운로드를 해줄 수 있다.
+		// WAS 의 webapp 의 절대경로를 알아와야 한다. 
+		String root = session.getServletContext().getRealPath("/"); 
+		String path = root + "resources"+File.separator+"files";
+		// path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다. 
+		System.out.println(path);
+		
+		// 다운로드 실패시 메세지를 띄워주기 위해서 boolean으로 한다.
+		boolean flag = false;
+		
+		fileManager.doFileDownload(fileName, orgFileName, path, res);
+		// 다운로드가 성공이면 true, 실패하면 false		
+		
+		if (!flag) {
+			res.setContentType("text/html; charset=UTF-8;");
+			PrintWriter writer = null;
+			
+			try{
+				writer = res.getWriter();
+			} catch(IOException e){
+			}
+			
+			writer.println("<script type = 'text/javascript'>alert('파일 다운로드가 실패했습니다');</script> ");
+		}
 	}
 	
 	// #25. 글 목록 페이지 요청
@@ -249,4 +381,22 @@ public class BoardController {
 		return "addCommentEnd";
 	}
 	
+	// 검색 자동완성
+	@RequestMapping(value = "/wordSearchShow.action", method = {RequestMethod.POST})
+	public String wordSearchShow(HttpServletRequest req){
+		
+		String colname = req.getParameter("colname");
+		String search = req.getParameter("search");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("colname", colname);
+		map.put("search", search);
+		
+		List<String> searchWordCompleteList = service.searchWordCompleteList(map);
+		
+		req.setAttribute("searchWordCompleteList", searchWordCompleteList);
+		
+		return "ajax/wordSearchShow";
+	}
 }

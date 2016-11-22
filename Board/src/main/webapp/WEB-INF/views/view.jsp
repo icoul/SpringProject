@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,9 @@
 	.long {width: 470px;}
 	.short {width: 120px;}
 	
-	a{tet-decoration : noneW} 		
+	a{color : black; text-decoration: none; vertical-align: middle;}
+	
+	a:hover{color : blue; text-decoration: underline;} 		
 </style>
 <script type = "text/javascript" src = "<%=request.getContextPath() %>/resources/js/jquery-2.0.0.js"></script>
 <script type = "text/javascript">
@@ -52,6 +56,14 @@
             	<th>내용</th>
             	<td>${vo.content}</td>
          	</tr>
+         	<tr>
+				<th>첨부파일</th>
+				<td>
+					<a href = "<%=request.getContextPath()%>/download.action?seq=${vo.seq}">
+						${vo.orgFileName}(<fmt:formatNumber value="${vo.fileSize}" pattern="#,###,###" />&nbsp;bytes)
+					</a>
+				</td>
+			</tr>
 			<tr>
 				<th>조회수</th>
 				<td>${vo.readCount}</td>

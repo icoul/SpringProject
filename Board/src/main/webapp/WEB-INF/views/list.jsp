@@ -1,17 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <style>
 	table, tr, td {border : solid grey 1px;}
-	#table {border-collapse: collapse; width : 750px;}
+	#table {border-collapse: collapse; width : 920px;}
 	#table th, #table td {padding : 5px;}
 	#table th {background-color : #DDDDDD;}
 	
 	a{text-decoration : none;
 	  color : blue;}
+	
+	#displayList {color : blue;}
 </style>
 
 <script type = "text/javascript" src = "<%=request.getContextPath() %>/resources/js/jquery-2.0.0.js"></script>
@@ -19,7 +21,61 @@
 	$(document).ready(function(){
 		searchKeep();
 		
+		$("#displayList").hide();
+		
+		$("#search").keyup(function(){
+			
+			var form_data = {
+					colname : $("#colname").val(),   // 키값 : 밸류값 
+					search  : $("#search").val()     // 키값 : 밸류값
+				};
+			
+			$.ajax({
+				url: "/board/wordSearchShow.action",
+				type: "POST",
+				data: form_data,  // url 요청페이지로 보내는 ajax 요청 데이터
+				dataType: "html", // ajax 요청에 의해 url 요청페이지로 부터 리턴받는 데이터타입. xml, json, html, text 가 있음.
+				success: function(data) {
+					/* success ==> url 요청페이지로 부터 ajax 요청한 것이 성공적으로 수행되었으면 
+					               url 요청페이지로 부터 전달받는 응답데이터가 파라미터로 되어진 data 이다.
+					                이 응답데이터인 data 를 가지고 처리해야할 일들을 기술하는 곳이 
+					               function(data) { } 부분이다.
+					                
+					*/
+					var resultText = data;
+					
+					var resultArr = resultText.split("|");
+					var count = parseInt(resultArr[0]);
+					
+					if (count > 0) {
+						var wordArr = resultArr[1].split(",");
+						
+						var resultHtml = "";
+						
+						for (var i = 0; i < wordArr.length; i++) {
+							var word = wordArr[i].trim();
+							var index = word.indexOf($("#search").val());
+							var tagword = word.substring(0, index) + "<span style = 'color : red;'>" + $("#search").val() + "</span>" + word.substring(index + $("#search").val().length, word.length) + "<br/>";
+							
+							resultHtml += "<a href = 'javascript:wordChoice(\""+ word +"\")'>" + tagword + "</a>";
+						} // end of for
+						
+						$("#displayList").html(resultHtml);
+						$("#displayList").show();
+					} // end of if
+					
+					else {
+						$("#displayList").hide();
+					} // end of if ~ else
+				}	
+			});
+		});
 	});
+	
+	function wordChoice(word){
+		$("#search").val(word);
+		$("#displayList").hide();
+	}
 	
 	function searchKeep(){
 		<c:if test = "${not empty search}">
@@ -80,6 +136,9 @@
 				<th style = "width : 70px;">성명</th>
 				<th style = "width : 180px;">날짜</th>
 				<th style = "width : 70px;">조회수</th>
+				
+				<th style = "width : 70px;">파일</th>
+				<th style = "width : 100px;">크기(bytes)</th>
 			</tr>
 			<c:forEach var = "list" items = "${contentList}" varStatus = "status">
 				<tr>
@@ -98,6 +157,15 @@
 					<td>${list.name}</td>
 					<td align = "center">${list.regDate}</td>
 					<td align = "center">${list.readCount}</td>
+					
+					<td align = "center">
+						<c:if test="${not empty list.fileName}">
+							<a href = "<%=request.getContextPath() %>/download.action?seq=${list.seq}">
+								<img width="15px" height="15px" src = "<%=request.getContextPath() %>/resources/images/disk.gif" border = "0" />
+							</a>
+						</c:if>
+					</td>
+					<td align = "center"><fmt:formatNumber value="${list.fileSize}" pattern="###,###,###" /></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -122,6 +190,13 @@
 		<input type = "text" name = "search" id = "search" size = "40" />
 		<button type = "button" onClick = "goSearch()">검색</button>
 	</form>
+	
+	<!-- ajax로 검색어 입력시 자동글 완성하기 -->
+	<div id = "display" style = "position : relative; left : 0px; top : 0px;">
+		<div id = "displayList" style = "width : 285px; margin-left : 67px; border-top : 0px; border : solid gray 1px;">
+			
+		</div>
+	</div>
 	
 	</br>
 	<button type = "button" onClick = "javascript:location.href='<%=request.getContextPath()%>/add.action'">글쓰기</button>

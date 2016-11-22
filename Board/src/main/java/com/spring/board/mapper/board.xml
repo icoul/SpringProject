@@ -25,6 +25,19 @@
 		</if>
 	</insert>
 	
+	<!-- #89. 파일첨부 글쓰기  -->
+	<insert id="add_withFile" parameterType ="com.spring.board.model.BoardVO" >
+		<if test='fk_seq.equals("")'>
+			insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status, groupno, fileName, orgFileName, fileSize)
+			values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default, #{groupno}, #{fileName, jdbcType=VARCHAR}, #{orgFileName}, #{fileSize})		
+		</if>
+		
+		<if test='!fk_seq.equals("")'>
+			insert into tblBoard(seq, name, subject, content, pw, readCount, regDate, status, groupno, fk_seq, depth, fileName, orgFileName, fileSize)
+			values(boardSeq.nextval, #{name}, #{subject}, #{content}, #{pw}, default, default, default, #{groupno}, #{fk_seq}, #{depth}+1, #{fileName, jdbcType=VARCHAR}, #{orgFileName}, #{fileSize})
+		</if>
+	</insert>
+	
 	<!-- #80. 글의 groupno 최대값 구하기, 답글쓰기 -->
 	<select id = "getGroupMaxno" resultType="Int">
 		select nvl( max(groupno), 0)
@@ -90,13 +103,13 @@
 		select T.*
 		from
 		(
-			select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount, V.groupno, V.fk_seq, V.depth
+			select rownum as RNO, V.seq, V.name, V.subject, V.content, V.readcount, V.regdate, V.commentCount, V.groupno, V.fk_seq, V.depth, V.fileName, V.orgFileName, V.fileSize
 			from
 				(
 					select seq, name, case when length(subject) > 20 then substr(subject, 1, 18) || '..'
 					                       else subject end as subject
 					    , content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate
-					    , commentCount, groupno, fk_seq, depth
+					    , commentCount, groupno, fk_seq, depth, fileName, orgFileName, fileSize
 					from tblBoard
 					where status = 1
 						  <if test='colname != null and search != null'>
@@ -122,7 +135,7 @@
 	
 	<!-- #32. 글 1개만 가져오기 -->
 	<select id = "view" parameterType="String" resultType = "com.spring.board.model.BoardVO" >
-		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate, groupno, depth
+		select seq, name, subject, content, readcount, to_char(regdate, 'yyyy-mm-dd hh24:mi:ss') as regdate, groupno, depth, fileName, orgFileName, fileSize
 		from tblBoard
 		where status = 1 and seq = #{seq}
 	</select>
@@ -186,4 +199,17 @@
 		where parentSeq = #{seq}
 	</update>
 	
+	<!-- 검색어 입력시 자동완성 기능 -->	
+	<select id = "searchWordCompleteList" parameterType = "java.util.HashMap" resultType = "String">
+		<if test="!colname.equals('content')">
+			select distinct ${colname}
+			from tblBoard
+			where lower(${colname}) like '%' || lower(#{search}) || '%'
+		</if>
+		<if test="colname.equals('content')">
+			select substr(content, instr(content, #{search}, 1, 1), length(#{search}) + 5) as content
+			from tblBoard
+			where lower(content) like '%' || lower(#{search}) || '%'
+		</if>
+	</select>
 </mapper>

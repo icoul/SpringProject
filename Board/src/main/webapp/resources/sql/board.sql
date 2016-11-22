@@ -559,7 +559,10 @@ order by groupno;
 
 commit;
 
-
+select substr(content, instr(content, '이렇게', 1, 1), length('이렇게') + 5) as content
+from tblBoard
+where content like '%' || lower('이렇게') || '%';
+    
 alter table tblBoard
 add fileName varchar2(255);-- WAS(톰캣)에 저장될 파일명(201611211433243323421.png)
 

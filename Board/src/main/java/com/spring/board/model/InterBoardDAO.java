@@ -8,6 +8,8 @@ public interface InterBoardDAO {
 	
 	int add(BoardVO vo); // 파일 첨부가 없는 글쓰기
 	
+	int add_withFile(BoardVO vo); // 파일첨부 글쓰기
+	
 	int getGroupMaxno(); // groupno의 최대값을 가져오는 메서드, 답글쓰기 기능
 	
 	//List<BoardVO> list(); // 글 목록 받아오기
@@ -32,5 +34,7 @@ public interface InterBoardDAO {
 	int isExistsComment(HashMap<String, String> map); // 해당 글에 댓글이 존재하는지 확인
 	
 	int delComment(HashMap<String, String> map); // 댓글삭제
+	
+	List<String> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
 	
 }

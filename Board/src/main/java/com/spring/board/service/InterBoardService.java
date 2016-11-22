@@ -12,6 +12,8 @@ public interface InterBoardService {
 	
 	int add(BoardVO vo); // 파일 첨부가 없는 글쓰기
 	
+	int add_withFile(BoardVO vo); // 파일첨부 글쓰기
+	
 	//List<BoardVO> list(); // 글 리스트 받아오기(검색어 없음)
 	List<BoardVO> list(HashMap<String,String> map); // 글 리스트 받아오기(검색어가 존재함)
 	
@@ -26,4 +28,7 @@ public interface InterBoardService {
 	int addComment(CommentVO vo) throws Throwable; // 댓글 작성하기
 	
 	List<CommentVO> listComment(String seq); // 댓글 리스트 가져오기
+	
+	List<String> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
+	
 }
