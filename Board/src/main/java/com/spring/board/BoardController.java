@@ -393,8 +393,9 @@ public class BoardController {
 		map.put("colname", colname);
 		map.put("search", search);
 		
-		List<String> searchWordCompleteList = service.searchWordCompleteList(map);
+		List<HashMap<String, String>> searchWordCompleteList = service.searchWordCompleteList(map);
 		
+		req.setAttribute("colname", colname);
 		req.setAttribute("searchWordCompleteList", searchWordCompleteList);
 		
 		return "ajax/wordSearchShow";

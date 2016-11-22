@@ -29,6 +29,6 @@ public interface InterBoardService {
 	
 	List<CommentVO> listComment(String seq); // 댓글 리스트 가져오기
 	
-	List<String> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
+	List<HashMap<String, String>> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
 	
 }

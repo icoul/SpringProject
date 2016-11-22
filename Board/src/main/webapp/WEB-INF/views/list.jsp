@@ -22,7 +22,6 @@
 		searchKeep();
 		
 		$("#displayList").hide();
-		
 		$("#search").keyup(function(){
 			
 			var form_data = {
@@ -42,7 +41,7 @@
 					               function(data) { } 부분이다.
 					                
 					*/
-					var resultText = data;
+					/* var resultText = data;
 					
 					var resultArr = resultText.split("|");
 					var count = parseInt(resultArr[0]);
@@ -66,7 +65,9 @@
 					
 					else {
 						$("#displayList").hide();
-					} // end of if ~ else
+					} // end of if ~ else */
+					$("#displayList").html(data);
+					$("#displayList").show();
 				}	
 			});
 		});

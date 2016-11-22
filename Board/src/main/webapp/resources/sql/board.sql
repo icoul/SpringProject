@@ -559,9 +559,21 @@ order by groupno;
 
 commit;
 
-select substr(content, instr(content, '이렇게', 1, 1), length('이렇게') + 5) as content
+select substr(content, instr(content, '하세', 1, 1), length('하세')) as searchword
+      ,substr(content, instr(content, '하세', 1, 1) + length('하세'), 5) as content
 from tblBoard
-where content like '%' || lower('이렇게') || '%';
+where lower(content) like '%' || lower('하세') || '%'
+
+select distinct subject
+from tblBoard
+where lower(subject) like '%' || lower('입니') || '%';
+
+select distinct
+       substr(subject, 1, instr(subject, '입니', 1, 1)-1) as forwardWord 
+      ,substr(subject, instr(subject, '입니', 1, 1), length('입니')) as searchword
+      ,substr(subject, instr(subject, '입니', 1, 1)+length('입니'), length(subject)-instr(subject, '입니', 1, 1)+length('입니')) as backword
+from tblBoard
+where lower(subject) like '%' || lower('입니') || '%';
     
 alter table tblBoard
 add fileName varchar2(255);-- WAS(톰캣)에 저장될 파일명(201611211433243323421.png)

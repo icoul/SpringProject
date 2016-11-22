@@ -35,6 +35,6 @@ public interface InterBoardDAO {
 	
 	int delComment(HashMap<String, String> map); // 댓글삭제
 	
-	List<String> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
+	List<HashMap<String, String>> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
 	
 }

@@ -200,16 +200,29 @@
 	</update>
 	
 	<!-- 검색어 입력시 자동완성 기능 -->	
-	<select id = "searchWordCompleteList" parameterType = "java.util.HashMap" resultType = "String">
-		<if test="!colname.equals('content')">
-			select distinct ${colname}
+	<resultMap type="java.util.HashMap" id="wordResultMap">
+		<result column="forwardWord" 	property="forwardWord" 	javaType="String" />
+		<result column="searchword" 	property="searchword" 	javaType="String" />
+		<result column="backword" 		property="backword" 	javaType="String" />
+	</resultMap>
+	
+	<select id = "searchWordList" parameterType = "java.util.HashMap" resultMap = "wordResultMap">
+			select distinct
+			       substr(${colname}, 1, instr(${colname}, #{search}, 1, 1)-1) as forwardWord 
+			      ,substr(${colname}, instr(${colname}, #{search}, 1, 1), length(#{search})) as searchword
+			      ,substr(${colname}, instr(${colname}, #{search}, 1, 1)+length(#{search}), length(${colname})-instr(${colname}, #{search}, 1, 1)+length(#{search})) as backword
 			from tblBoard
 			where lower(${colname}) like '%' || lower(#{search}) || '%'
-		</if>
-		<if test="colname.equals('content')">
-			select substr(content, instr(content, #{search}, 1, 1), length(#{search}) + 5) as content
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="contentResultMap">
+		<result column="content" 	property="content" 	javaType="String" />
+	</resultMap>
+	
+	<select id = "searchWordContentList" parameterType = "java.util.HashMap" resultMap = "contentResultMap">
+			select substr(content, instr(content, #{search}, 1, 1), length(#{search})) as searchword
+				  ,substr(content, instr(content, #{search}, 1, 1) + length(#{search}), 5) as content
 			from tblBoard
 			where lower(content) like '%' || lower(#{search}) || '%'
-		</if>
 	</select>
 </mapper>

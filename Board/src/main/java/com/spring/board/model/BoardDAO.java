@@ -172,17 +172,19 @@ public class BoardDAO implements InterBoardDAO {
 	
 	// 검색어 입력시 자동 글 완성
 	@Override
-	public List<String> searchWordCompleteList(HashMap<String, String> map) {
+	public List<HashMap<String, String>> searchWordCompleteList(HashMap<String, String> map) {
 
-		if (!map.get("search").trim().isEmpty()) {
+		if (map.get("colname") != "content") {
 			
-			List<String> searchWordCompleteList = sqlsession.selectList("board.searchWordCompleteList", map);
+			List<HashMap<String, String>> searchWordCompleteList = sqlsession.selectList("board.searchWordList", map);
 			
 			return searchWordCompleteList;
 		}
 		
 		else {
-			return null;
+			List<HashMap<String, String>> searchWordCompleteList = sqlsession.selectList("board.searchWordContentList", map);
+			
+			return searchWordCompleteList;
 		}
 	}
 }

@@ -172,11 +172,11 @@ public class BoardService implements InterBoardService {
 	
 	// 검색어 입력시 자동 글 완성
 	@Override
-	public List<String> searchWordCompleteList(HashMap<String, String> map) {
+	public List<HashMap<String, String>> searchWordCompleteList(HashMap<String, String> map) {
 
 		if (!map.get("search").trim().isEmpty()) {
 			
-			List<String> searchWordCompleteList = dao.searchWordCompleteList(map);
+			List<HashMap<String, String>> searchWordCompleteList = dao.searchWordCompleteList(map);
 			
 			return searchWordCompleteList;
 		}
