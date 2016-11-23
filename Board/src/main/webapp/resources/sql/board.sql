@@ -16,7 +16,7 @@ create sequence boardSeq
 start with 1
 increment by 1
 nomaxvalue
-nominvalue
+nominvalue  
 nocycle
 nocache;
 
@@ -583,3 +583,15 @@ add orgFileName varchar2(255);-- 원본 파일명(강아지.png) 사용자가 �
 
 alter table tblBoard
 add fileSize  number;-- 파일 크기, 단위는 byte이다.
+
+select seq, name, subject, readCount, regdate, rank
+from
+(
+select rank() over(order by readCount desc, regDate desc) as rank, seq, name
+     , case when length(subject) > 20 then substr(subject, 1, 18)
+            else subject end as subject
+     , readcount, to_char(regDate, 'yyyy-mm-dd hh24:mi:ss') as regDate 
+from tblBoard
+where status = 1
+)V
+where V.rank <= to_number('10');

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #10. mapper 기본 설정 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<!-- #11. 루트 엘리먼트 및 네임스페이스 설정하기(이 네임스페이스의 이름은 프로젝트 전체 내에서 반드시 고유해야만 한다.) --> 
+<mapper namespace="doublefileattachtest">
+
+	<insert id="add" parameterType="com.test.fileattach.model.BoardVO">
+		insert into tblDoublefileContent(seqcontent, name, subject, content, regDate)
+		values(seq_tblDoublefileContent.nextval, #{name}, #{subject}, #{content}, default)
+	</insert> 
+	
+	<insert id="add_file" parameterType="com.test.fileattach.model.AttachFileVO">
+		<!-- 
+		insert into tblDoublefileAttach(seqfileno, fileName, orgFilename, fileSize, fk_seqcontent)
+		values(seq_tblDoublefileAttach.nextval, #{fileName}, #{orgFilename}, #{fileSize}, (select max(seqcontent) from tblDoublefileContent)) 
+		-->
+		
+		insert into tblDoublefileAttach(seqfileno, fileName, orgFilename, fileSize, fk_seqcontent, thumbnailFileName)
+		values(seq_tblDoublefileAttach.nextval, #{fileName}, #{orgFilename}, #{fileSize}, (select max(seqcontent) from tblDoublefileContent), #{thumbnailFileName})
+	</insert>
+	
+	<select id="boardList" resultType="com.test.fileattach.model.BoardVO">
+		select seqcontent, subject, name, to_char(regDate,'yyyy-mm-dd hh24:mi:ss') as regDate 
+		from tblDoublefileContent
+		order by seqcontent desc
+	</select>
+	
+	<select id="getSeqcontent" resultType="int">
+		select max(seqcontent) from tblDoublefileContent
+	</select>
+	
+	<select id="view_tblDoublefileContent" resultType="com.test.fileattach.model.BoardVO" parameterType="String">
+		select seqcontent, name, subject, content, to_char(regDate,'yyyy-mm-dd hh24:mi:ss') as regDate 
+		from tblDoublefileContent
+		where seqcontent = #{seqcontent}
+	</select>
+	
+	<select id="view_tblDoublefileAttach" resultType="com.test.fileattach.model.AttachFileVO" parameterType="String">
+	    select seqfileno, fileName, orgFilename, fileSize, fk_seqcontent, thumbnailFileName
+	    from tblDoublefileAttach
+	    where fk_seqcontent = #{seqcontent}
+	</select>
+	
+	<select id="getSeqfileno" resultType="String">
+		select fileName
+		from tblDoublefileAttach
+		where seqfileno = #{seqfileno}
+	</select>
+	
+
+</mapper>

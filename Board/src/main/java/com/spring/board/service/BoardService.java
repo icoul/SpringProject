@@ -185,4 +185,13 @@ public class BoardService implements InterBoardService {
 			return null;
 		}
 	}
+	
+	// JSON을 이용하여 조회수 랭킹 보여주기
+	@Override
+	public List<BoardVO> getRankN(String rankN) {
+		
+		List<BoardVO> list = dao.getRankN(rankN);
+		
+		return list;
+	}
 }

@@ -31,4 +31,6 @@ public interface InterBoardService {
 	
 	List<HashMap<String, String>> searchWordCompleteList(HashMap<String, String> map); // 검색어 입력시 자동 글 완성
 	
+	List<BoardVO> getRankN(String rankN); // 조회수 랭킹
+	
 }

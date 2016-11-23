@@ -3,6 +3,7 @@ package com.spring.board;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -399,5 +401,45 @@ public class BoardController {
 		req.setAttribute("searchWordCompleteList", searchWordCompleteList);
 		
 		return "ajax/wordSearchShow";
+	}
+	
+	// JSON을 이용하여 조회수 랭킹 보여주기
+	@RequestMapping(value = "/listRankN.action", method = {RequestMethod.GET})
+	public String listRankN(HttpServletRequest req){
+		
+		String rankN = req.getParameter("rankN");
+		List<BoardVO> rankList = service.getRankN(rankN);
+		// 오라클 데이터베이스에서 조회수가 1등부터 5등까지 또는 1등부터 10등까지인 데이터를 넘겨받아서
+		// ajax로 요청한 곳(list.jsp)으로 넘겨줄 때는 데이터타입이 JSON 형태로 넘겨주어야한다.
+		// 그래서 아래처럼 JSONObject타입의 List로 넘겨준다.
+		
+		List<JSONObject> jsonObjectList = new ArrayList<JSONObject>();
+		for(BoardVO vo : rankList){
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("seq", vo.getSeq());
+			jsonObj.put("name", vo.getName());
+			jsonObj.put("subject", vo.getSubject());
+			jsonObj.put("readCount", vo.getReadCount());
+			jsonObj.put("regDate", vo.getRegDate());
+			
+			jsonObjectList.add(jsonObj);
+		}
+		
+		/*
+		 * [{"subject":"안녕하세요","name":"송중기","regDate":"2016-11-22 09:57:53","readCount":"10","seq":"93"}, 
+		 * {"subject":"일단 써보겠습니다","name":"송중기","regDate":"2016-11-22 09:43:46","readCount":"10","seq":"92"}, 
+		 * {"subject":"시험","name":"설현","regDate":"2016-11-21 10:14:15","readCount":"4","seq":"28"}, 
+		 * {"subject":"첫 글입니다.","name":"홍길동","regDate":"2016-11-21 10:00:25","readCount":"4","seq":"21"}, 
+		 * {"subject":"구길동입니다.","name":"구길동","regDate":"2016-11-21 12:27:02","readCount":"3","seq":"90"}, 
+		 * {"subject":"첫 글입니다.","name":"하정훈","regDate":"2016-11-21 10:09:36","readCount":"3","seq":"26"}, 
+		 * {"subject":"팔길동입니다.","name":"팔길동","regDate":"2016-11-21 12:27:02","readCount":"2","seq":"89"}, 
+		 * {"subject":"퇴사각","name":"홍길동","regDate":"2016-11-22 14:55:17","readCount":"1","seq":"94"}, 
+		 * {"subject":"일단 써보겠습니다","name":"김영호","regDate":"2016-11-21 20:31:42","readCount":"1","seq":"91"}, 
+		 * {"subject":"삼길동입니다.","name":"삼길동","regDate":"2016-11-21 12:27:02","readCount":"1","seq":"84"}]
+		 */
+		
+		req.setAttribute("jsonObjectList", jsonObjectList);
+		
+		return "ajax/listRankN";
 	}
 }

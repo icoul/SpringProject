@@ -225,4 +225,19 @@
 			from tblBoard
 			where lower(content) like '%' || lower(#{search}) || '%'
 	</select>
+	
+	<!-- JSON을 이용하여 조회수 랭킹 보여주기 -->
+	<select id = "getRankN" parameterType="String" resultType="com.spring.board.model.BoardVO" >
+		select seq, name, subject, readCount, regdate, rank
+		from
+			(
+				select rank() over(order by readCount desc, regDate desc) as rank, seq, name
+					 , case when length(subject) > 20 then substr(subject, 1, 18)
+							else subject end as subject
+					 , readcount, to_char(regDate, 'yyyy-mm-dd hh24:mi:ss') as regDate
+				from tblBoard
+				where status = 1
+			)V
+		where V.rank <![CDATA[<]]> = to_number(#{seq})
+	</select>
 </mapper>
