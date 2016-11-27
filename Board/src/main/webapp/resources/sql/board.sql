@@ -595,3 +595,21 @@ from tblBoard
 where status = 1
 )V
 where V.rank <= to_number('10');
+
+
+
+create table testTBL
+(seq number not null
+,namea varchar2(100) not null
+,constraint UK_testTBL_namea unique(namea)
+);
+
+
+insert into testTBL values(1, 'aaa');
+
+select *
+from testTBL;
+commit;
+update testTBL set namea = 'bb';
+
+insert into testTBL values(3, 'bb');

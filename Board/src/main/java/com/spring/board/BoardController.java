@@ -36,6 +36,13 @@ public class BoardController {
 	@Autowired
 	private FileManager fileManager;
 	
+	// #34. 글 수정하기
+	@RequestMapping(value = "/test.action", method = {RequestMethod.GET})
+	public String test(HttpServletRequest req){
+		
+		return "test";
+	}
+	
 	// #20. 글쓰기 폼페이지 요청
 	// 지금은 다른 업무가 없으므로 JSP 폼 페이지만 요청한다.
 	@RequestMapping(value="/add.action", method={RequestMethod.GET})

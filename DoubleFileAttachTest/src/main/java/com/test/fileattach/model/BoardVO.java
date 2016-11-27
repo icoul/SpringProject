@@ -11,7 +11,7 @@ public class BoardVO {
 	private String regDate;     // 글쓴시간
 	
 	private MultipartFile[] attach;   // 진짜 파일  ==> WAS 디스크에 저장됨.
-	 // MultipartFile[] attach 는 오라클 데이터베이스 tblDoublefileAttach 테이블의 컬럼이 아니다.
+	 // MultipartFile[] attach 는 오라클 데이터	베이스 tblDoublefileAttach 테이블의 컬럼이 아니다.
 	
 	public BoardVO() { }
 	
